@@ -105,7 +105,7 @@ namespace TestCaseByCase
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static string StripWhitespace(this string input)
+        public static string StripWhitespace(string input)
         {
             return Regex.Replace(input, @"\s+", " ").Trim();
         }
@@ -150,9 +150,13 @@ namespace TestCaseByCase
 
         public WebBrowser()
         {
-            //ChromeDriverService chormeDriverService = ChromeDriverService.CreateDefaultService();
-            //chormeDriverService.HideCommandPromptWindow = true;
-            driver = new ChromeDriver();
+            ChromeDriverService chormeDriverService = ChromeDriverService.CreateDefaultService();
+            chormeDriverService.HideCommandPromptWindow = true;
+            ChromeOptions chromeOptions = new ChromeOptions();
+            chromeOptions.AddArguments("--disable-extensions"); // to disable extension  //*[@id="navbarButtonsExample"]/div/ul/li[3]/div
+            chromeOptions.AddArguments("--disable-notifications"); // to disable notification
+            chromeOptions.AddArguments("--disable-application-cache"); // to disable cache
+            driver = new ChromeDriver(chromeOptions);
         }
         public IWebDriver OpenBrowser(string url)
         {
@@ -160,8 +164,22 @@ namespace TestCaseByCase
             driver.Navigate().GoToUrl(url);
             return driver;
         }
+
+        public WebDriverWait awaiting(int second)
+        {
+            WebDriverWait wait = new WebDriverWait(driver,
+            TimeSpan.FromSeconds(second));
+            wait.Until((x) =>
+            {
+                return ((IJavaScriptExecutor)driver).ExecuteScript(
+                "return document.readyState").Equals("complete");
+            });
+            return wait;
+
+        }
         //public ChromeOptions DisableChorme()
         //{
+        //    ChromeOptions chromeOptions = new ChromeOptions();
         //    chromeOptions.AddArguments("--disable-extensions"); // to disable extension  //*[@id="navbarButtonsExample"]/div/ul/li[3]/div
         //    chromeOptions.AddArguments("--disable-notifications"); // to disable notification
         //    chromeOptions.AddArguments("--disable-application-cache"); // to disable cache
@@ -174,8 +192,26 @@ namespace TestCaseByCase
 
         public IWebElement FindById(string id)
         {
-            return driver.FindElement(By.Id(id));
+            var eleemnt = driver.FindElement(By.Id(id));
+            awaiting(10);
+            return eleemnt;
         }
+
+        public IWebElement FindByName(string name)
+        {
+            var eleemnt = driver.FindElement(By.Name(name));
+            awaiting(10);
+            return eleemnt;
+        }
+
+        public Actions action(string keyAction) 
+        {
+            Actions act = new Actions(driver);
+            act.SendKeys(keyAction).Build().Perform();
+            return act;
+        }
+
+       
     }
 
     public class FileChecker

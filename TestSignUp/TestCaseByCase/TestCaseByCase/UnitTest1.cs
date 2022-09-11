@@ -7,6 +7,7 @@ using System;
 using System.Threading.Tasks;
 using System.Threading;
 using static TestCaseByCase.HelperTest;
+using System.Runtime.CompilerServices;
 
 namespace TestCaseByCase
 {
@@ -17,7 +18,7 @@ namespace TestCaseByCase
         public ChromeOptions chromeOptions;
 
         [TestMethod]
-        public void TestMethod2()
+        public void TestCheck()
         {
             StubExtensionManager stub = new StubExtensionManager();
             FileChecker checker = new FileChecker(stub);
@@ -28,217 +29,187 @@ namespace TestCaseByCase
             //Assert
             Assert.AreEqual(true, IsTrueFile);
         }
-        public IWebDriver OpenBrowser(string url)
+        private void Login(string email, string password,string actualUrl)
         {
-            driver.Manage().Window.Maximize();
-            driver.Navigate().GoToUrl(url);
-            return driver;
-        }
-
-        private void Login(string email, string password)
-        {
-            By inputPw = By.Name("password");
-            By btnSubmit = By.TagName("button");
-
             OpenBrowser("http://127.0.0.1:8000");
-            // Get the current URL
-            string url = driver.Url;
-            // Get the current page HTML source
-            string html = driver.PageSource;
-            FindElementByxPath("//*[@id='navbarButtonsExample']/div/ul/li[3]/div/ul/li[1]").SendKeys(email);
-            driver.FindElement(inputPw).SendKeys(password);
-            driver.FindElement(btnSubmit).Click();
-
-            string title = driver.Title;
-            if (title == "Payme - Wallet")
-            {
-                Console.WriteLine("Pass login");
-            }
-            else
-            {
-                Console.WriteLine("error");
-                driver.Quit();
-            }
+            var expectedUrl = "http://127.0.0.1:8000/user";
+            FindElementByxPath("//*[@id=\"navbarButtonsExample\"]/div/ul/li[1]/a").Click();
+            FindByName("email").SendKeys(email);
+            FindByName("password").SendKeys(password);
+            FindElementByxPath("//*[@id=\"keepsign\"]").Click();
+            FindElementByxPath("//*[@id=\"signin\"]/div[3]/div[2]/button").Click();
+            Assert.AreEqual(expectedUrl ,actualUrl, "Login Success");
         }
 
-
-
         [TestMethod]
-        public async Task TestUIAsync()
+        public void TestUIAsync()
         {
+            OpenBrowser("http://127.0.0.1:8000");
 
-
-
-            
-
-            //string actualUrl = "http://127.0.0.1:8000/user";
-            Actions act = new Actions(driver);
-            WebDriverWait wait = new WebDriverWait(driver,
-            TimeSpan.FromSeconds(30));
-            act.SendKeys(Keys.PageDown).Build().Perform();
-            //string expectedUrl = driver.Url;
             FindById("//*[@id='dropdownMenuOffset']/img").Click();
+            action(Keys.PageDown);
+            action(Keys.PageDown);
+            action(Keys.PageDown);
+            action(Keys.PageDown);
+
             Console.WriteLine("Waiting");
-            //var _result = await TakesALongTimeToProcess("Test");
-            wait.Timeout.Minutes.ToString("1");
-            driver.FindElement(By.XPath("//*[@id='navbarButtonsExample']/div/ul/li[3]/div/ul/li[1]")).Click();
+            FindElementByxPath("//*[@id='navbarButtonsExample']/div/ul/li[3]/div/ul/li[1]").Click();
             Thread.Sleep(1000);
-            //Assert.AreEqual(actualUrl, expectedUrl);
-            //
-
-            driver.Quit();
-
         }
 
-      
+        public Task<string> TakesALongTimeToProcess(
+            string word)
+        {
+            return Task.Run(() =>
+            {
+                Task.Delay(1000);
+                return word;
 
-        //private Task<string> TakesALongTimeToProcess(
-        //    string word)
-        //{
-        //    return Task.Run(() =>
-        //    {
-        //        Task.Delay(1000);
-        //        return word;
-
-        //    });
-        //}
+            });
+        }
 
 
         [TestMethod]
-        public void TestMethod1()
+        public void TestLogout()
         {
-            By inputEmail = By.Name("email");
-            By inputPw = By.Name("password");
-            By btnSubmit = By.TagName("button");
-            ChromeOptions options = new ChromeOptions();
-            options.AddArguments("--disable-extensions"); // to disable extension
-            options.AddArguments("--disable-notifications"); // to disable notification
-            options.AddArguments("--disable-application-cache"); // to disable cache
+            // login page 
+            Login("nguyenvanquang2k1.00@gmail.com", "123456Aa@", "http://127.0.0.1:8000/user");
+            var expectedUrl = "http://127.0.0.1:8000/user/signin-email";
 
-            //ChromeDriverService chormeDriverService = ChromeDriverService.CreateDefaultService();
-            //chormeDriverService.HideCommandPromptWindow = true;
-            IWebDriver driver = new ChromeDriver(options);
-            driver.Manage().Window.Maximize();
-            driver.Navigate().GoToUrl("http://127.0.0.1:8000/user/signin-email");
-            string actualUrl = "http://127.0.0.1:8000/user";
+            Console.WriteLine("Login successfully");
+            var userImg = FindElementByxPath("//*[@id=\"dropdownMenuClickableInside\"]/img");
+            if (!userImg.Displayed)
+            {
+                Console.WriteLine("Not found image");
+                return;
+            }
+            userImg.Click();
 
-            Login("nguyenvanquang2k.00@gmail.com", "123456Aa@");
-            Console.WriteLine("Hello");
+            if (!FindElementByxPath("/html/body/header/div[2]/div[3]/div[2]/ul/li[2]/a").Displayed)
+            {
+                Console.WriteLine("Not found text 'My profile'");
+            }
+            if (!FindElementByxPath("/html/body/header/div[2]/div[3]/div[2]/ul/li[3]/a").Displayed)
+            {
+                Console.WriteLine("Not found text 'Payment Methods'");
+            }
+            if (!FindElementByxPath("/html/body/header/div[2]/div[3]/div[2]/ul/li[4]/a").Displayed)
+            {
+                Console.WriteLine("Not found text 'Seurity'");
+            }
+            if (!FindElementByxPath("/html/body/header/div[2]/div[3]/div[2]/ul/li[2]/a").Displayed)
+            {
+                Console.WriteLine("Not found text 'Personal Verification'");
+            }
+            if (!FindElementByxPath("/html/body/header/div[2]/div[3]/div[2]/ul/li[2]/a").Displayed)
+            {
+                Console.WriteLine("Not found text 'Settings'");
+            }
 
-            string expectedUrl = driver.Url;
-            driver.FindElement(By.XPath("/html/body/header/div[2]/div[3]/div[2]")).Click();
-            driver.FindElement(By.XPath("/html/body/header/div[2]/div[3]/div[2]/ul/li[7]/a")).Click();
-            Assert.AreEqual(actualUrl, expectedUrl);
+            FindElementByxPath("/html/body/header/div[2]/div[3]/div[2]/ul/li[7]/a").Click();
 
-            driver.Quit();
-
+            string actualUrl = driver.Url;
+            Assert.AreEqual(expectedUrl, actualUrl, "Logout Successfully");
         }
 
-        [TestMethod]
-        public void TestSignInMobile()
+        public void validateSignUpPage(string xPath, string fname, string ferror, string ferrorPw)
         {
-            By inputMobile = By.Name("mobile");
-            By inputPw = By.Name("password");
-            By btnSubmit = By.TagName("button");
-            ChromeOptions options = new ChromeOptions();
-            options.AddArguments("--disable-extensions"); // to disable extension
-            options.AddArguments("--disable-notifications"); // to disable notification
-            options.AddArguments("--disable-application-cache"); // to disable cache
-
-            //ChromeDriverService chormeDriverService = ChromeDriverService.CreateDefaultService();
-            //chormeDriverService.HideCommandPromptWindow = true;
-            IWebDriver driver = new ChromeDriver(options);
-            driver.Manage().Window.Maximize();
-            driver.Navigate().GoToUrl("http://127.0.0.1:8000/user/signin-mobile");
-            string actualUrl = "http://127.0.0.1:8000/user";
-
-            driver.FindElement(inputMobile).SendKeys("326566732");
-            driver.FindElement(inputPw).SendKeys("123456Aa@");
-            driver.FindElement(btnSubmit).Click();
-
-            string expectedUrl = driver.Url;
-            driver.FindElement(By.XPath("/html/body/header/div[2]/div[3]/div[2]")).Click();
-            driver.FindElement(By.XPath("/html/body/header/div[2]/div[3]/div[2]/ul/li[7]/a")).Click();
-
-            Assert.AreEqual(actualUrl, expectedUrl);
-
-            driver.Quit();
-
+            FindByName(fname).Click();
+            FindElementByxPath(xPath).Click();
+            if (!FindElementByxPath(ferror).Displayed || FindElementByxPath(ferrorPw).Displayed)
+            {
+                Console.WriteLine("Not found message validate input");
+                return;
+            }
+            awaiting(10);
         }
+
 
         [TestMethod]
         public void TestSignUpEmail()
         {
-            By inputEmail = By.Name("email");
-            By inputPw = By.Name("password");
-            By btnSubmit = By.TagName("button");
-            By inputVerify = By.Name("verify_code");
-            By inputChecked = By.Name("check18");
-
-            // ChromeDriverService chormeDriverService = ChromeDriverService.CreateDefaultService();
-            // chormeDriverService.HideCommandPromptWindow = false;
-            IWebDriver driver = new ChromeDriver();
-            driver.Manage().Window.Maximize();
-
-            driver.Navigate().GoToUrl("http://127.0.0.1:8000/user/signup-email");
+            OpenBrowser("http://127.0.0.1:8000/user/signin-email");
             string actualUrl = "http://127.0.0.1:8000/user";
 
+            var picture = FindElementByxPath("/html/body/div/div/div[2]/div[2]/img");
+            if (!picture.Displayed) {
+                Console.WriteLine("Not found logo");
+                return;
+            }
 
-            driver.FindElement(inputEmail).SendKeys("ngyenvanquang2k.00@gmail.com");
-            driver.FindElement(inputPw).SendKeys("123456Aa@");
+            var lang = FindElementByxPath("/html/body/div/div/div[1]/div/a/img");
+            if (lang.Displayed)
+            {
+                Console.WriteLine("Success");
+                lang.Click();
+                var chooseVN = FindElementByxPath("/html/body/div/div/div[1]/div/ul/li[3]/a");
+                if (!chooseVN.Displayed)
+                {
+                    Console.WriteLine("Choose lang failed");
+                    return;
+                }
+                chooseVN.Click();
+                awaiting(20);
 
-            driver.FindElement(inputChecked).Click();
-            driver.FindElement(btnSubmit).Click();
-            // SignUp.Form1.ReferenceEquals.inputVerify
-            driver.FindElement(inputVerify).SendKeys("");
+                var chooseCN = FindElementByxPath("/html/body/div/div/div[1]/div/ul/li[3]/a");
+                if (!chooseCN.Displayed)
+                {
+                    Console.WriteLine("Choose lang failed");
+                    return;
+                }
+                chooseCN.Click();
+                awaiting(20);
+            }
+            //Test input
+            validateSignUpPage("check18", "/html/body/div/div/div[2]/div[1]/div[3]/div/span[2]",
+                "//*[@id=\"frm\"]/div/div[1]/div", "//*[@id=\"frm\"]/div/div[2]/div[1]");
 
-            String expectedUrl = driver.Url;
+            FindByName("email").SendKeys("ngyenvanquang2k.00@gmail.com");
+            FindByName("password").SendKeys("123456Aa@");
+            FindByName("check18").Click();
+            FindElementByxPath("/html/body/div/div/div[2]/div[1]/div[3]/div/span[2]").Click();
+            awaiting(10);
+            FindElementByxPath("//*[@id=\"create-account\"]").Click();
 
-            //driver.FindElement(By.XPath("/html/body/header/div[2]/div[3]/div[2]")).Click();
-            //driver.FindElement(By.XPath("/html/body/header/div[2]/div[3]/div[2]/ul/li[7]/a")).Click();
+            var verify = FindByName("verify_code");
+            if (!verify.Displayed)
+            {
+                Console.WriteLine("Not found input verify code");
+                return;
+            }
+            string expectedUrl = driver.Url;
 
-            Assert.AreEqual(actualUrl, expectedUrl);
-
-            driver.Quit();
-
+            Assert.AreEqual(actualUrl, expectedUrl, "Register sign up email successfully");
         }
 
         [TestMethod]
         public void TestSignUpMobile()
         {
-            By inputEmail = By.Name("mobile");
-            By inputPw = By.Name("password");
-            By btnSubmit = By.TagName("button");
-            By inputVerify = By.Name("verify_code");
-            By inputChecked = By.Name("check18");
+            OpenBrowser("http://127.0.0.1:8000/user/signup-email");
+            string actualUrl = "http://127.0.0.1:8000/user/verifycode-signup-mobile";
 
-            // ChromeDriverService chormeDriverService = ChromeDriverService.CreateDefaultService();
-            // chormeDriverService.HideCommandPromptWindow = false;
-            IWebDriver driver = new ChromeDriver();
-            driver.Manage().Window.Maximize();
-
-            driver.Navigate().GoToUrl("http://127.0.0.1:8000/user/signup-email");
-            string actualUrl = "http://127.0.0.1:8000/user";
-            string val = Convert.ToString(Console.ReadLine());
-            string email = Convert.ToString(Console.ReadLine());
-            string pw = Convert.ToString(Console.ReadLine());
-
-
-            driver.FindElement(inputEmail).SendKeys(email);
-            driver.FindElement(inputPw).SendKeys(pw);
-
-            driver.FindElement(inputChecked).Click();
-            driver.FindElement(btnSubmit).Click();
-            driver.FindElement(inputVerify).SendKeys("");
+            //Test input
+            validateSignUpPage("check18", "/html/body/div/div/div[2]/div[1]/div[3]/div/span[2]",
+                "//*[@id=\"frm\"]/div/div[1]/div[3]", "//*[@id=\"frm\"]/div/div[2]/div");
+            FindByName("mobile").SendKeys("123546789");
+            FindByName("password").SendKeys("123456Aa@");
+            FindByName("check18").Click();
+            FindElementByxPath("//*[@id=\"create-account\"]").Click();
 
             string expectedUrl = driver.Url;
 
-            //driver.FindElement(By.XPath("/html/body/header/div[2]/div[3]/div[2]")).Click();
-            //driver.FindElement(By.XPath("/html/body/header/div[2]/div[3]/div[2]/ul/li[7]/a")).Click();
-            Assert.AreEqual(actualUrl, expectedUrl);
-
-            driver.Quit();
-
+            var verify = FindByName("verify_code");
+            if (!verify.Displayed)
+            {
+                Console.WriteLine("Not found input verify code");
+                return;
+            }
+            if (!FindElementByxPath("//*[@id=\"signin\"]/div[1]/div").Displayed)
+            {
+                Console.WriteLine("Not found message error input verify");
+                return;
+            }
+            Assert.AreEqual(actualUrl, expectedUrl, "Register sign up mobile successfully");
         }
     }
 }
