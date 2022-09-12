@@ -8,6 +8,7 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
 using static TestCaseByCase.HelperTest;
+using System.Threading;
 
 namespace TestCaseByCase
 {
@@ -165,6 +166,20 @@ namespace TestCaseByCase
             return driver;
         }
 
+        //wait 5s
+
+            public void WaitUntil(string path)
+
+
+
+
+
+
+
+
+        {
+
+        }
         public WebDriverWait awaiting(int second)
         {
             WebDriverWait wait = new WebDriverWait(driver,
@@ -187,7 +202,23 @@ namespace TestCaseByCase
         //}
         public IWebElement FindElementByxPath(string xPath)
         {
-            return driver.FindElement(By.XPath(xPath));
+            var element = driver.FindElement(By.XPath(xPath));
+            Thread.Sleep(30);
+            return element;
+        }
+
+        public bool SummaryDisplayed(By element)
+        {
+            try
+            {
+                var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
+                var myElement = wait.Until(x => x.FindElement(element));
+                return myElement.Displayed;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public IWebElement FindById(string id)

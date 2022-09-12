@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using static TestCaseByCase.HelperTest;
 using System.Runtime.CompilerServices;
-
+    
 namespace TestCaseByCase
 {
     [TestClass]
@@ -40,11 +40,103 @@ namespace TestCaseByCase
             FindElementByxPath("//*[@id=\"signin\"]/div[3]/div[2]/button").Click();
             Assert.AreEqual(expectedUrl ,actualUrl, "Login Success");
         }
+        [TestMethod]
+        public void TestCreateP2POrder()
+        {
+            //setup test
+            OpenBrowser("http://127.0.0.1:8000");
+
+            //1. Login 
+            //2. Select Post My - Ads
+
+            //input
+            //1
+            //2. range input: amount, min, max
+            //1000 usdt
+            //min 1.000.000
+            //max 5.000.000
+            //3. remark, option
+
+            //click go
+
+            //VERIFY
+            //var list = htmlxxxx
+            //list.contain(xxxx)
+
+
+        }
+
+        [TestMethod]
+        public void TestCreateP2POrder_Case2()
+        {
+            //setup test
+            OpenBrowser("http://127.0.0.1:8000");
+
+            //1. Login 
+            //2. Select Post My - Ads
+
+            //input
+            //1
+            //2. range input: amount, min, max
+            //500 usdt
+            //min 10.000.000
+            //max 50.000.000
+            //3. remark, option
+
+            //click go
+
+            //VERIFY
+            //var list = htmlxxxx
+            //list.contain(xxxx)
+
+
+        }
+
+        [TestMethod]
+        public void TestCreateP2POrder_Case3_EmptyInput()
+        {
+            //setup test
+            OpenBrowser("http://127.0.0.1:8000");
+
+            //1. Login 
+            //2. Select Post My - Ads
+
+            //input
+            //1
+            //2. range input: amount, min, max
+            //-100 usdt
+            //min 10.000.000
+            //max 50.000.000
+            //3. remark, option
+
+            //click go
+
+            //VERIFY
+            //expect error:
+            //var list = htmlxxxx
+            //list.contain(xxxx)
+
+
+        }
 
         [TestMethod]
         public void TestUIAsync()
         {
+            //setup test
             OpenBrowser("http://127.0.0.1:8000");
+
+            //1.sign in with email
+            //2. wallet page
+
+
+            //input
+
+            //output
+
+
+            //verify expected
+            //1. đã tới dc wallet page
+            //2. Top menu có user name của : khanh1412
 
             FindById("//*[@id='dropdownMenuOffset']/img").Click();
             action(Keys.PageDown);
@@ -77,7 +169,7 @@ namespace TestCaseByCase
             var expectedUrl = "http://127.0.0.1:8000/user/signin-email";
 
             Console.WriteLine("Login successfully");
-            var userImg = FindElementByxPath("//*[@id=\"dropdownMenuClickableInside\"]/img");
+            var userImg = FindElementByxPath("//*[@id='dropdownMenuClickableInside']");
             if (!userImg.Displayed)
             {
                 Console.WriteLine("Not found image");
@@ -106,22 +198,26 @@ namespace TestCaseByCase
                 Console.WriteLine("Not found text 'Settings'");
             }
 
-            FindElementByxPath("/html/body/header/div[2]/div[3]/div[2]/ul/li[7]/a").Click();
+            //FindElementByxPath("/html/body/header/div[2]/div[3]/div[2]/ul/li[7]/a").Click();
 
             string actualUrl = driver.Url;
             Assert.AreEqual(expectedUrl, actualUrl, "Logout Successfully");
+            driver.Quit();
         }
 
         public void validateSignUpPage(string xPath, string fname, string ferror, string ferrorPw)
         {
-            FindByName(fname).Click();
+
+            FindElementByxPath(fname).Click();
             FindElementByxPath(xPath).Click();
-            if (!FindElementByxPath(ferror).Displayed || FindElementByxPath(ferrorPw).Displayed)
-            {
-                Console.WriteLine("Not found message validate input");
-                return;
-            }
-            awaiting(10);
+            SummaryDisplayed(By.XPath(""));
+            if (!FindElementByxPath(ferror).Displayed)
+                {
+                    Console.WriteLine("Not found message validate input");
+                    return;
+                }
+           
+
         }
 
 
@@ -145,7 +241,7 @@ namespace TestCaseByCase
                 var chooseVN = FindElementByxPath("/html/body/div/div/div[1]/div/ul/li[3]/a");
                 if (!chooseVN.Displayed)
                 {
-                    Console.WriteLine("Choose lang failed");
+                    Console.WriteLine("Choose lang VN failed");
                     return;
                 }
                 chooseVN.Click();
@@ -154,7 +250,7 @@ namespace TestCaseByCase
                 var chooseCN = FindElementByxPath("/html/body/div/div/div[1]/div/ul/li[3]/a");
                 if (!chooseCN.Displayed)
                 {
-                    Console.WriteLine("Choose lang failed");
+                    Console.WriteLine("Choose lang CN failed");
                     return;
                 }
                 chooseCN.Click();
@@ -185,12 +281,12 @@ namespace TestCaseByCase
         [TestMethod]
         public void TestSignUpMobile()
         {
-            OpenBrowser("http://127.0.0.1:8000/user/signup-email");
+            OpenBrowser("http://127.0.0.1:8000/user/signup-mobile");
             string actualUrl = "http://127.0.0.1:8000/user/verifycode-signup-mobile";
 
             //Test input
-            validateSignUpPage("check18", "/html/body/div/div/div[2]/div[1]/div[3]/div/span[2]",
-                "//*[@id=\"frm\"]/div/div[1]/div[3]", "//*[@id=\"frm\"]/div/div[2]/div");
+            validateSignUpPage("/html/body/div/div/div[2]/div[1]/div[3]/div/span[2]", "//*[@id='check18']",
+                "//*[@id='frm']/div/div[1]/div[3]", "//*[@id='frm']/div/div[2]/div");
             FindByName("mobile").SendKeys("123546789");
             FindByName("password").SendKeys("123456Aa@");
             FindByName("check18").Click();
