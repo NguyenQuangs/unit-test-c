@@ -168,15 +168,16 @@ namespace TestCaseByCase
             return driver;
         }
 
-        public void Login(string email, string password, string actualUrl)
+        public void Login(string email, string password)
         {
-            OpenBrowser(url);
+            OpenBrowser();
             var expectedUrl = "http://127.0.0.1:8000/user";
             FindElementByxPath("//*[@id=\"navbarButtonsExample\"]/div/ul/li[1]/a").Click();
             FindByName("email").SendKeys(email);
             FindByName("password").SendKeys(password);
             FindElementByxPath("//*[@id=\"keepsign\"]").Click();
             FindElementByxPath("//*[@id=\"signin\"]/div[3]/div[2]/button").Click();
+            string actualUrl = driver.Url;
             Assert.AreEqual(expectedUrl, actualUrl, "Login Success");
         }
 
@@ -204,14 +205,11 @@ namespace TestCaseByCase
                 "return document.readyState").Equals("complete");
             });
             return wait;
-
         }
 
         public IWebElement FindElementByxPath(string xPath)
         {
-            var element = driver.FindElement(By.XPath(xPath));
-            Thread.Sleep(30);
-            return element;
+            return driver.FindElement(By.XPath(xPath));
         }
 
         public bool SummaryDisplayed(By element)
@@ -230,26 +228,22 @@ namespace TestCaseByCase
 
         public IWebElement FindById(string id)
         {
-            var eleemnt = driver.FindElement(By.Id(id));
-            awaiting(10);
-            return eleemnt;
+            return driver.FindElement(By.Id(id));
         }
 
         public IWebElement FindByName(string name)
         {
-            var eleemnt = driver.FindElement(By.Name(name));
-            awaiting(10);
-            return eleemnt;
+            return driver.FindElement(By.Name(name));
         }
 
-        public Actions action(string keyAction) 
+        public Actions action(string keyAction)
         {
             Actions act = new Actions(driver);
             act.SendKeys(keyAction).Build().Perform();
             return act;
         }
 
-       
+
     }
 
     public class FileChecker
