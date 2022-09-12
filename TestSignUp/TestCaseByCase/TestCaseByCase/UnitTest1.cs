@@ -29,17 +29,7 @@ namespace TestCaseByCase
             //Assert
             Assert.AreEqual(true, IsTrueFile);
         }
-        private void Login(string email, string password,string actualUrl)
-        {
-            OpenBrowser("http://127.0.0.1:8000");
-            var expectedUrl = "http://127.0.0.1:8000/user";
-            FindElementByxPath("//*[@id=\"navbarButtonsExample\"]/div/ul/li[1]/a").Click();
-            FindByName("email").SendKeys(email);
-            FindByName("password").SendKeys(password);
-            FindElementByxPath("//*[@id=\"keepsign\"]").Click();
-            FindElementByxPath("//*[@id=\"signin\"]/div[3]/div[2]/button").Click();
-            Assert.AreEqual(expectedUrl ,actualUrl, "Login Success");
-        }
+      
         [TestMethod]
         public void TestCreateP2POrder()
         {
@@ -70,7 +60,7 @@ namespace TestCaseByCase
         public void TestCreateP2POrder_Case2()
         {
             //setup test
-            OpenBrowser("http://127.0.0.1:8000");
+            OpenBrowser();
 
             //1. Login 
             //2. Select Post My - Ads
@@ -96,7 +86,7 @@ namespace TestCaseByCase
         public void TestCreateP2POrder_Case3_EmptyInput()
         {
             //setup test
-            OpenBrowser("http://127.0.0.1:8000");
+            OpenBrowser();
 
             //1. Login 
             //2. Select Post My - Ads
@@ -123,7 +113,7 @@ namespace TestCaseByCase
         public void TestUIAsync()
         {
             //setup test
-            OpenBrowser("http://127.0.0.1:8000");
+            OpenBrowser();
 
             //1.sign in with email
             //2. wallet page
@@ -148,6 +138,20 @@ namespace TestCaseByCase
             FindElementByxPath("//*[@id='navbarButtonsExample']/div/ul/li[3]/div/ul/li[1]").Click();
             Thread.Sleep(1000);
         }
+
+        [TestMethod]
+        public void SignIn_Case1_EmptyInput()
+        {
+            //set up 
+            OpenBrowser();
+            FindElementByxPath("//*[@id='navbarButtonsExample']/div/ul/li[1]").Click();
+
+            FindElementByxPath("//*[@id='signin']/div[3]/div[2]/button").Click();
+            Thread.Sleep(3000);
+            var errInput = FindElementByxPath("//*[@id='signin']/div[1]/div[2]").Displayed;
+
+        }
+
 
         public Task<string> TakesALongTimeToProcess(
             string word)
@@ -221,6 +225,7 @@ namespace TestCaseByCase
         }
 
 
+
         [TestMethod]
         public void TestSignUpEmail()
         {
@@ -281,7 +286,7 @@ namespace TestCaseByCase
         [TestMethod]
         public void TestSignUpMobile()
         {
-            OpenBrowser("http://127.0.0.1:8000/user/signup-mobile");
+            //OpenBrowser("http://127.0.0.1:8000/user/signup-mobile");
             string actualUrl = "http://127.0.0.1:8000/user/verifycode-signup-mobile";
 
             //Test input

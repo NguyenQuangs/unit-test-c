@@ -148,6 +148,8 @@ namespace TestCaseByCase
     {
         public IWebDriver driver = null;
         public ChromeOptions chromeOptions;
+        string url = "http://127.0.0.1:8000";
+
 
         public WebBrowser()
         {
@@ -159,16 +161,28 @@ namespace TestCaseByCase
             chromeOptions.AddArguments("--disable-application-cache"); // to disable cache
             driver = new ChromeDriver(chromeOptions);
         }
-        public IWebDriver OpenBrowser(string url)
+        public IWebDriver OpenBrowser()
         {
             driver.Manage().Window.Maximize();
             driver.Navigate().GoToUrl(url);
             return driver;
         }
 
+        public void Login(string email, string password, string actualUrl)
+        {
+            OpenBrowser(url);
+            var expectedUrl = "http://127.0.0.1:8000/user";
+            FindElementByxPath("//*[@id=\"navbarButtonsExample\"]/div/ul/li[1]/a").Click();
+            FindByName("email").SendKeys(email);
+            FindByName("password").SendKeys(password);
+            FindElementByxPath("//*[@id=\"keepsign\"]").Click();
+            FindElementByxPath("//*[@id=\"signin\"]/div[3]/div[2]/button").Click();
+            Assert.AreEqual(expectedUrl, actualUrl, "Login Success");
+        }
+
         //wait 5s
 
-            public void WaitUntil(string path)
+        public void WaitUntil(string path)
 
 
 
@@ -192,14 +206,7 @@ namespace TestCaseByCase
             return wait;
 
         }
-        //public ChromeOptions DisableChorme()
-        //{
-        //    ChromeOptions chromeOptions = new ChromeOptions();
-        //    chromeOptions.AddArguments("--disable-extensions"); // to disable extension  //*[@id="navbarButtonsExample"]/div/ul/li[3]/div
-        //    chromeOptions.AddArguments("--disable-notifications"); // to disable notification
-        //    chromeOptions.AddArguments("--disable-application-cache"); // to disable cache
-        //    return chromeOptions;
-        //}
+
         public IWebElement FindElementByxPath(string xPath)
         {
             var element = driver.FindElement(By.XPath(xPath));
