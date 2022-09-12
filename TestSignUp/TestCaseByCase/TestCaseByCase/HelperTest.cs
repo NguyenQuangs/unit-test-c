@@ -243,7 +243,13 @@ namespace TestCaseByCase
             return act;
         }
 
-
+        //Using click Action Selenium
+        public Actions mouseAction(IWebElement element)
+        {
+            Actions actions = new Actions(driver);
+            actions.MoveToElement(element).Click().Build().Perform();
+            return actions;
+        }
     }
 
     public class FileChecker

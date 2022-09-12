@@ -15,7 +15,7 @@ namespace TestCaseByCase
     public class UnitTest1 : WebBrowser
     {
 
-        string email = "nguyenvanquang2k1.00@gmail.com";
+        string email = "nguyennhatquang16k.00@gmail.com";
         string pw = "123456Aa@";
 
         [TestMethod]
@@ -31,30 +31,113 @@ namespace TestCaseByCase
             Assert.AreEqual(true, IsTrueFile);
         }
 
+        //Test input Myads
+        public void TestInputMyAds(string amount, string min, string max)
+        {
+            var textMyAds = FindElementByxPath("/html/body/header/div[1]/a[3]/div");
+            if (!textMyAds.Displayed)
+            {
+                Console.WriteLine("Không tìm thấy text MyAds");
+                driver.Quit();
+            }
+            textMyAds.Click();
+            Thread.Sleep(3000);
+            //click post my ads
+            var btnPost = FindElementByxPath("/html/body/form/section/div/div[2]/div[2]/input");
+            if (!btnPost.Displayed)
+            {
+                Console.WriteLine("Không tìm thấy button Post My Ads");
+                driver.Quit();
+            }
+            btnPost.Click();
+            Thread.Sleep(1000);
+
+            //if (FindElementByxPath("/html/body/div[4]/div/section").Displayed)
+            //{
+            //    string expected_case1 = "http://127.0.0.1:8000/user/kyc";
+            //    Console.WriteLine("Chưa KYC khi Post My Ads");
+            //    var btnKYC = FindElementByxPath("/html/body/div[4]/div/section/div/div[3]/a");
+            //    if (!btnKYC.Displayed)
+            //    {
+            //        Console.WriteLine("Không hiển thị nút KYC");
+            //        return;
+
+            //    }
+            //    btnKYC.Click();
+            //    Console.WriteLine("KYC loaded page success");
+            //    Thread.Sleep(2000);
+            //    string actual_case1 = driver.Url;
+            //    Assert.AreEqual(expected_case1, actual_case1, "Failed verify KYC");
+                
+            //}
+
+
+            FindElementByxPath("/html/body/section[2]/div[2]/div[2]/div/div[1]/form/div[1]/div/div[2]/div[3]/label").Click();
+            FindElementByxPath("/html/body/section[2]/div[2]/div[2]/div/div[1]/form/div[2]/div[2]/div[2]/label").Click();
+            var btnNext = FindElementByxPath("/html/body/section[2]/div[2]/div[2]/div/div[5]/button");
+            if (!btnNext.Displayed)
+            {
+                Console.WriteLine("Không tìm thấy button Next");
+                driver.Quit();
+            }
+            mouseAction(btnNext);
+
+
+            FindElementByxPath("/html/body/div[5]/section/div[2]/form/div/div/div[1]/div[1]/div[1]/input").SendKeys(amount);
+            FindElementByxPath("/html/body/div[5]/section/div[2]/form/div/div/div[1]/div[2]/div[1]/div[1]/input").SendKeys(min);
+            FindElementByxPath("/html/body/div[5]/section/div[2]/form/div/div/div[1]/div[2]/div[3]/div/input").SendKeys(max);
+            Thread.Sleep(4000);
+            FindElementByxPath("/html/body/div[5]/section/div[2]/form/div/div/div[2]/div[1]/div/div/div/div[1]/div/div/button/span").Click();
+            //default click bank transfer
+            FindElementByxPath("/html/body/div[5]/section/div[2]/form/div/div/div[2]/div[1]/div/div/div/div[2]/div/div/section/div[1]/div[2]/span").Click();
+            Thread.Sleep(2000);
+
+            var btnNext_2 = FindElementByxPath("/html/body/div[5]/section/div[2]/form/div/div/div[4]/div[2]/button[2]");
+            if (!btnNext_2.Displayed)
+            {
+                Console.WriteLine("Không tìm thấy button Next");
+                driver.Quit();
+            }
+            btnNext_2.Click();
+            Thread.Sleep(2000);
+
+            //post my ads
+            var btnPost_2 = FindElementByxPath("/html/body/form/div/section/div[2]/div/div/div[3]/div/div[1]/button[2]");
+            if (!btnPost_2.Displayed)
+            {
+                Console.WriteLine("Không tìm thấy button Next");
+                driver.Quit();
+            }
+            btnNext_2.Click();
+            Thread.Sleep(3000);
+            FindElementByxPath("/html/body/form/div/section/div[2]/div/div/div[3]/div/div[2]/div/div/section/a").Click();
+
+            MyAds myAds = new MyAds { amount = "1000", min = "1000", max = "5000", pmMethod = "Bank Transfer" };
+
+            myAds.amount.Contains(amount);
+            myAds.min.Contains(min);
+            myAds.max.Contains(max);
+            Assert.AreEqual(myAds, myAds, "Failed");
+            Console.WriteLine("Post My Ads succesfully");
+            driver.Quit();
+
+
+           // var textAmount = FindElementByxPath("/html/body/form/div/section[2]/div/table/tbody/tr[2]/td[2]/div/p[1]");
+          
+
+
+        }
+        //2. range input: amount, min, max
+        //1000 usdt
+        //min 1.000.000
+        //max 5.000.000
         [TestMethod]
         public void TestCreateP2POrder()
         {
             //setup test
             OpenBrowser();
-
-            //1. Login 
-            //2. Select Post My - Ads
-
-            //input
-            //1
-            //2. range input: amount, min, max
-            //1000 usdt
-            //min 1.000.000
-            //max 5.000.000
-            //3. remark, option
-
-            //click go
-
-            //VERIFY
-            //var list = htmlxxxx
-            //list.contain(xxxx)
-
-
+            Login(email, pw);
+            TestInputMyAds("1000", "1000", "5000");
         }
 
         [TestMethod]
