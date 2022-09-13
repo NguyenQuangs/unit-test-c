@@ -448,8 +448,8 @@ namespace TestCaseByCase
             driver.Quit();
         }
 
-        string email_test = "nguyennhatquang16ksaaaadsaddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd.00@gmail.com";
-        string pw_test = "1234";
+        string email_test = "nguyenvanquang2k.00@gmail.com";
+        string pw_test = "123456Aa@";
         [TestMethod]
         public void SignIn_Email_Case2()
         {
@@ -638,12 +638,12 @@ namespace TestCaseByCase
             FindElementByxPath("//*[@id=\"create-account\"]").Click();
 
            // SummaryDisplayed(By.XPath("/html/body/div[2]/div/div[2]/div[1]/form/div/div[1]/div"));
-            SummaryDisplayed(By.XPath("/html/body/div/div/div[2]/div[1]/form/div/div[2]/div[1]"));
+            //SummaryDisplayed(By.XPath("/html/body/div/div/div[2]/div[1]/form/div/div[2]/div[1]"));
 
 
             string actualUrl = driver.Url;
             Assert.AreEqual(expectedUrl, actualUrl, "Sign Up Failed");
-            webDriverAwait(20, By.Name("verify_code"));
+            
             var verify = FindByName("verify_code");
             if (!verify.Displayed)
             {
@@ -651,6 +651,8 @@ namespace TestCaseByCase
                 Thread.Sleep(1000);
                 driver.Quit();
             }
+            WaitForLoadElement(verify);
+            FindById("verify").Click();
             Assert.AreEqual(expectedUrl, actualUrl, "Register sign up email successfully");
             Thread.Sleep(1000);
             driver.Quit();

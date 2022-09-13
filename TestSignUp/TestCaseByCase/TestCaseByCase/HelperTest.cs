@@ -321,6 +321,30 @@ namespace TestCaseByCase
             return jsExecutor;
         }
 
+        //using cuon toi 1 phan  tu trong trang
+        public IJavaScriptExecutor scrollIntoViewElement(IWebElement element)
+        {
+            string javascript = "arguments[0].scrollIntoView(true)";
+            IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)driver;
+            jsExecutor.ExecuteScript(javascript, element);
+            Thread.Sleep(2000);
+            return jsExecutor;
+        }
+
+        public IJavaScriptExecutor getValue(IWebElement element)
+        {
+            IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
+             js.ExecuteScript("return arguments[0].value", element).ToString();
+            return js;
+        }
+
+        public void WaitForLoadElement(IWebElement element, int timeoutSec = 90)
+        {
+            IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeoutSec));
+            wait.Until(wd => js.ExecuteScript("return arguments[0].value", element).ToString());
+        }
+
         //Ghi log file
         //Declaration of the file stream and format 
         private static string _logFile = string.Format("{0:yyyymmddhhmmss}", DateTime.Now);
@@ -350,10 +374,8 @@ namespace TestCaseByCase
             stream.Write("\\T{0}", Message);
             stream.Flush();
         }
+
     }
-
-}
-
 
     public class FileChecker
     {
@@ -373,5 +395,9 @@ namespace TestCaseByCase
         {
             return objmanager.CheckExtension(FileName);
         }
+
     }
 }
+
+
+    
