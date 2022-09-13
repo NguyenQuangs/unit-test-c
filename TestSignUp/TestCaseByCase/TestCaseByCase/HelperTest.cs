@@ -331,6 +331,7 @@ namespace TestCaseByCase
             return jsExecutor;
         }
 
+
         public IJavaScriptExecutor getValue(IWebElement element)
         {
             IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
