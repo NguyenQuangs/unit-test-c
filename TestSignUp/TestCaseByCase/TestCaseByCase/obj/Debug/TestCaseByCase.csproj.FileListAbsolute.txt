@@ -42,3 +42,4 @@ C:\Tom\Test\unit-test-c\TestSignUp\TestCaseByCase\TestCaseByCase\obj\Debug\TestC
 C:\Tom\Test\unit-test-c\TestSignUp\TestCaseByCase\TestCaseByCase\obj\Debug\TestCaseByCase.csproj.CopyComplete
 C:\Tom\Test\unit-test-c\TestSignUp\TestCaseByCase\TestCaseByCase\obj\Debug\TestCaseByCase.dll
 C:\Tom\Test\unit-test-c\TestSignUp\TestCaseByCase\TestCaseByCase\obj\Debug\TestCaseByCase.pdb
+C:\Tom\Test\unit-test-c\TestSignUp\TestCaseByCase\TestCaseByCase\bin\Debug\SeleniumExtras.WaitHelpers.dll

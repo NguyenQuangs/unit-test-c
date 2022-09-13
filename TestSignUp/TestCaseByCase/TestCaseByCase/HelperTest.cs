@@ -8,6 +8,8 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
 using static TestCaseByCase.HelperTest;
+using SeleniumExtras.WaitHelpers;
+using System.Threading.Tasks;
 using System.Threading;
 
 namespace TestCaseByCase
@@ -52,8 +54,6 @@ namespace TestCaseByCase
                 testContextInstance = value;
             }
         }
-
-        
 
         public static void ShouldEqualWithDiff(this string actualValue, string expectedValue)
         {
@@ -143,12 +143,13 @@ namespace TestCaseByCase
         }
     }
 
-
     public class WebBrowser
     {
         public IWebDriver driver = null;
         public ChromeOptions chromeOptions;
         string url = "http://127.0.0.1:8000";
+        string expectedUrl = "http://127.0.0.1:8000/user";
+
 
 
         public WebBrowser()
@@ -171,7 +172,6 @@ namespace TestCaseByCase
         public void Login(string email, string password)
         {
             OpenBrowser();
-            var expectedUrl = "http://127.0.0.1:8000/user";
             FindElementByxPath("//*[@id=\"navbarButtonsExample\"]/div/ul/li[1]/a").Click();
             FindByName("email").SendKeys(email);
             FindByName("password").SendKeys(password);
@@ -181,19 +181,15 @@ namespace TestCaseByCase
             Assert.AreEqual(expectedUrl, actualUrl, "Login Success");
         }
 
-        //wait 5s
-
-        public void WaitUntil(string path)
-
-
-
-
-
-
-
-
+        public Task<IWebElement> TakesALongTimeToProcess(
+        IWebElement element)
         {
+            return Task.Run(() =>
+            {
+                Task.Delay(1000).Wait();
+                return element;
 
+            });
         }
         public WebDriverWait awaiting(int second)
         {
@@ -205,11 +201,6 @@ namespace TestCaseByCase
                 "return document.readyState").Equals("complete");
             });
             return wait;
-        }
-
-        public IWebElement FindElementByxPath(string xPath)
-        {
-            return driver.FindElement(By.XPath(xPath));
         }
 
         public bool SummaryDisplayed(By element)
@@ -224,6 +215,75 @@ namespace TestCaseByCase
             {
                 return false;
             }
+        }
+
+        public WebDriverWait webDriverAwait(int seconds, By by)
+        {
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(seconds)); //20 seconds
+            wait.Until(ExpectedConditions.ElementToBeClickable(by));
+            return wait;
+        }
+
+        //Await class
+        public IAlert WaitUntil_AlertIsPresent(int timeoutInSeconds = 30)
+        {
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeoutInSeconds));
+            return wait.Until(ExpectedConditions.AlertIsPresent());
+        }
+        public IWebElement WaitUntil_ElementExists(By by, int timeoutInSeconds = 30)
+        {
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeoutInSeconds));
+            return wait.Until(ExpectedConditions.ElementExists(by));
+        }
+        public IWebElement WaitUntil_ElementIsVisible(By by, int timeoutInSeconds = 30)
+        {
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeoutInSeconds));
+            return wait.Until(ExpectedConditions.ElementIsVisible(by));
+        }
+        public bool WaitUntil_ElementSelectionStateToBe(By by, bool selected, int timeoutInSeconds = 30)
+        {
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeoutInSeconds));
+            return wait.Until(ExpectedConditions.ElementSelectionStateToBe(by, selected));
+        }
+        public bool WaitUntil_ElementSelectionStateToBe(IWebElement element, bool expectedState, int timeoutInSeconds = 90)
+        {
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeoutInSeconds));
+            return wait.Until(ExpectedConditions.ElementSelectionStateToBe(element, expectedState));
+        }
+        public IWebElement WaitUntil_ElementToBeClickable(IWebElement element, int timeoutInSeconds = 90)
+        {
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeoutInSeconds));
+            return wait.Until(ExpectedConditions.ElementToBeClickable(element));
+        }
+        public IWebElement WaitUntil_ElementToBeClickable(By by, int timeoutInSeconds = 30)
+        {
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeoutInSeconds));
+            return wait.Until(ExpectedConditions.ElementToBeClickable(by));
+        }
+        public bool WaitUntil_InvisibilityOfElementLocated(By by, int timeoutInSeconds = 30)
+        {
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeoutInSeconds));
+            return wait.Until(ExpectedConditions.InvisibilityOfElementLocated(by));
+        }
+        public bool WaitUntil_InvisibilityOfElementWithText(By by, string text, int timeoutInSeconds = 30)
+        {
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeoutInSeconds));
+            return wait.Until(ExpectedConditions.InvisibilityOfElementWithText(by, text));
+        }
+        public bool WaitUntil_StalenessOf(IWebElement element, int timeoutInSeconds = 90)
+        {
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeoutInSeconds));
+            return wait.Until(ExpectedConditions.StalenessOf(element));
+        }
+        public bool WaitUntil_TextToBePresentInElement(IWebElement element, string str, int timeoutInSeconds = 90)
+        {
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeoutInSeconds));
+            return wait.Until(ExpectedConditions.TextToBePresentInElement(element, str));
+        }
+
+        public IWebElement FindElementByxPath(string xPath)
+        {
+            return driver.FindElement(By.XPath(xPath));
         }
 
         public IWebElement FindById(string id)
@@ -250,7 +310,50 @@ namespace TestCaseByCase
             actions.MoveToElement(element).Click().Build().Perform();
             return actions;
         }
+
+        //using javascript click
+        public IJavaScriptExecutor clickElement(IWebElement element)
+        {
+            string javascript = "arguments[0].click()";
+            IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)driver;
+            jsExecutor.ExecuteScript(javascript, element);
+            Thread.Sleep(2000);
+            return jsExecutor;
+        }
+
+        //Ghi log file
+        //Declaration of the file stream and format 
+        private static string _logFile = string.Format("{0:yyyymmddhhmmss}", DateTime.Now);
+        public static StreamWriter stream = null;
+
+        //Create a file that will be used to store the log information
+        public static void CreateLogFile()
+        {
+            //create a directory
+            string filePath = @"C:\LogRecords\";
+
+            if (Directory.Exists(filePath))
+            {
+                stream = File.AppendText(filePath + _logFile + ".log");
+            }
+            else
+            {
+                Directory.CreateDirectory(filePath);
+                stream = File.AppendText(filePath + _logFile + ".log");
+            }
+        }
+
+        //Create a method that can write the information into the log file
+        public static void WriteToFile(string Message)
+        {
+            stream.Write("{0} {1}\t", DateTime.Now.ToLongTimeString(), DateTime.Now.ToLongDateString());
+            stream.Write("\\T{0}", Message);
+            stream.Flush();
+        }
     }
+
+}
+
 
     public class FileChecker
     {

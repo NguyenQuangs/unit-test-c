@@ -72,48 +72,47 @@ namespace TestCaseByCase
             //}
 
 
-            FindElementByxPath("/html/body/section[2]/div[2]/div[2]/div/div[1]/form/div[1]/div/div[2]/div[3]/label").Click();
-            FindElementByxPath("/html/body/section[2]/div[2]/div[2]/div/div[1]/form/div[2]/div[2]/div[2]/label").Click();
-            var btnNext = FindElementByxPath("/html/body/section[2]/div[2]/div[2]/div/div[5]/button");
+            FindById("ETH").Click();
+            FindById("VND").Click();
+            var btnNext = FindById("btnNext");
             if (!btnNext.Displayed)
             {
                 Console.WriteLine("Không tìm thấy button Next");
                 driver.Quit();
             }
-            mouseAction(btnNext);
+            btnNext.Submit();
 
-
-            FindElementByxPath("/html/body/div[5]/section/div[2]/form/div/div/div[1]/div[1]/div[1]/input").SendKeys(amount);
-            FindElementByxPath("/html/body/div[5]/section/div[2]/form/div/div/div[1]/div[2]/div[1]/div[1]/input").SendKeys(min);
-            FindElementByxPath("/html/body/div[5]/section/div[2]/form/div/div/div[1]/div[2]/div[3]/div/input").SendKeys(max);
+            FindById("total_amount").SendKeys(amount);
+            FindById("order_min").SendKeys(min);
+            FindById("order_max").SendKeys(max);
             Thread.Sleep(4000);
-            FindElementByxPath("/html/body/div[5]/section/div[2]/form/div/div/div[2]/div[1]/div/div/div/div[1]/div/div/button/span").Click();
+            FindById("btnAdd").Click();
             //default click bank transfer
-            FindElementByxPath("/html/body/div[5]/section/div[2]/form/div/div/div[2]/div[1]/div/div/div/div[2]/div/div/section/div[1]/div[2]/span").Click();
+            awaiting(2);
+            //driver.FindElement(By.ClassName("method-text")).Click();
             Thread.Sleep(2000);
+            clickElement(driver.FindElement(By.ClassName("method-text")));
 
-            var btnNext_2 = FindElementByxPath("/html/body/div[5]/section/div[2]/form/div/div/div[4]/div[2]/button[2]");
+            var btnNext_2 = FindElementByxPath("//*[@id='btnNext']");
             if (!btnNext_2.Displayed)
             {
                 Console.WriteLine("Không tìm thấy button Next");
                 driver.Quit();
             }
-            btnNext_2.Click();
+            clickElement(btnNext_2);
             Thread.Sleep(2000);
 
             //post my ads
-            var btnPost_2 = FindElementByxPath("/html/body/form/div/section/div[2]/div/div/div[3]/div/div[1]/button[2]");
+            var btnPost_2 = FindById("btnPosAds");
             if (!btnPost_2.Displayed)
             {
                 Console.WriteLine("Không tìm thấy button Next");
                 driver.Quit();
             }
-            btnNext_2.Click();
-            Thread.Sleep(3000);
+            clickElement(btnPost_2);
             FindElementByxPath("/html/body/form/div/section/div[2]/div/div/div[3]/div/div[2]/div/div/section/a").Click();
 
             MyAds myAds = new MyAds { amount = "1000", min = "1000", max = "5000", pmMethod = "Bank Transfer" };
-
             myAds.amount.Contains(amount);
             myAds.min.Contains(min);
             myAds.max.Contains(max);
@@ -137,7 +136,7 @@ namespace TestCaseByCase
             //setup test
             OpenBrowser();
             Login(email, pw);
-            TestInputMyAds("1000", "1000", "5000");
+            TestInputMyAds("0.5", "150000", "20000000");
         }
 
         [TestMethod]
@@ -270,65 +269,44 @@ namespace TestCaseByCase
                 Thread.Sleep(500);
                 driver.Quit();
             }
-            //action(Keys.PageDown);
+            action(Keys.PageDown);
 
-            //if (!FindElementByxPath("/html/body/section[3]/div[2]/div[1]/img").Displayed || !FindElementByxPath("/html/body/section[3]/div[2]/div[2]/img").Displayed
-            //    || !FindElementByxPath("/html/body/section[3]/div[2]/div[3]/img").Displayed || !FindElementByxPath("/html/body/section[3]/div[2]/div[4]/img").Displayed )
-            //{
-            //    Console.WriteLine("Không tìm thấy hình ảnh");
-            //    Thread.Sleep(500);
-            //    driver.Quit();
-            //}
-            //if (!FindElementByxPath("/html/body/section[4]/div[1]/h4").Displayed || !FindElementByxPath("/html/body/section[4]/div[2]/div[1]").Displayed
-            //   || !FindElementByxPath("/html/body/section[4]/div[2]/div[2]").Displayed || !FindElementByxPath("/html/body/section[4]/div[2]/div[3]").Displayed)
-            //{
-            //    Console.WriteLine("Không tìm card");
-            //    Thread.Sleep(500);
-            //    driver.Quit();
-            //}
-            //if (!FindElementByxPath("//html/body/section[5]").Displayed || !FindElementByxPath("/html/body/section[5]/div/div/div[2]/h1").Displayed
-            //   || !FindElementByxPath("/html/body/section[5]/div/div/div[1]/img").Displayed || !FindElementByxPath("/html/body/section[5]/div/div/div[2]/p").Displayed)
-            //{
-            //    Console.WriteLine("Không tìm thay text");
-            //    Thread.Sleep(500);
-            //    driver.Quit();
-            //}
-            //action(Keys.PageDown);
+            if (!FindElementByxPath("/html/body/section[3]/div[2]/div[1]/img").Displayed || !FindElementByxPath("/html/body/section[3]/div[2]/div[2]/img").Displayed
+                || !FindElementByxPath("/html/body/section[3]/div[2]/div[3]/img").Displayed || !FindElementByxPath("/html/body/section[3]/div[2]/div[4]/img").Displayed)
+            {
+                Console.WriteLine("Không tìm thấy hình ảnh");
+                Thread.Sleep(500);
+                driver.Quit();
+            }
+            if (!FindElementByxPath("/html/body/section[4]/div[1]/h4").Displayed || !FindElementByxPath("/html/body/section[4]/div[2]/div[1]").Displayed
+               || !FindElementByxPath("/html/body/section[4]/div[2]/div[2]").Displayed || !FindElementByxPath("/html/body/section[4]/div[2]/div[3]").Displayed)
+            {
+                Console.WriteLine("Không tìm card");
+                Thread.Sleep(500);
+                driver.Quit();
+            }
+            if (!FindElementByxPath("//html/body/section[5]").Displayed || !FindElementByxPath("/html/body/section[5]/div/div/div[2]/h1").Displayed
+               || !FindElementByxPath("/html/body/section[5]/div/div/div[1]/img").Displayed || !FindElementByxPath("/html/body/section[5]/div/div/div[2]/p").Displayed)
+            {
+                Console.WriteLine("Không tìm thay text");
+                Thread.Sleep(500);
+                driver.Quit();
+            }
+            action(Keys.PageDown);
 
             var textFAQ_1 = FindElementByxPath("/html/body/section[7]/div/div[1]/div[1]/span/h6/a");
             var textFAQ_2 = FindElementByxPath("/html/body/section[7]/div/div[1]/div[2]/span/h6/a");
             var textFAQ_3 = FindElementByxPath("/html/body/section[7]/div/div[1]/div[3]/span/h6/a");
 
-            //if (!FindElementByxPath("/html/body/section[7]/div/div[1]/h3").Displayed || !textFAQ_1.Displayed
-            //   || !textFAQ_2.Displayed || 
-            //   !textFAQ_3.Displayed || !FindElementByxPath("/html/body/section[7]/div/div[2]/img").Displayed)
-            //{
-            //    Console.WriteLine("Không tìm thay FAQ");
-            //    Thread.Sleep(500);
-            //    driver.Quit();
-            //}
-            //action(Keys.PageDown);
-            //action(Keys.PageDown);
-            //action(Keys.PageDown);
-            //action(Keys.PageDown);
-            //FindElementByxPath("/html/body/section[7]/div/div[1]/div[1]/span/h6/a").Click();
-            ////textFAQ_1.Click();
-            //Thread.Sleep(500);
-            //driver.Navigate().Back();
-            //driver.Navigate().Refresh();
-            //Thread.Sleep(500);
-            //textFAQ_2.Click();
-            //action(Keys.PageDown);
-            //Thread.Sleep(500);
-            //driver.Navigate().Back();
-            //driver.Navigate().Refresh();
-            //Thread.Sleep(500);
-            //textFAQ_3.Click();
-            //action(Keys.PageDown);
-            //Thread.Sleep(500);
-            //driver.Navigate().Back();
-            //driver.Navigate().Refresh();
-            //Thread.Sleep(500);
+            if (!FindElementByxPath("/html/body/section[7]/div/div[1]/h3").Displayed || !textFAQ_1.Displayed
+               || !textFAQ_2.Displayed ||
+               !textFAQ_3.Displayed || !FindElementByxPath("/html/body/section[7]/div/div[2]/img").Displayed)
+            {
+                Console.WriteLine("Không tìm thay FAQ");
+                Thread.Sleep(500);
+                driver.Quit();
+            }
+
             if (!FindElementByxPath("/html/body/footer/section").Displayed)
             {
                 Console.WriteLine("Không tìm thấy footer");
@@ -356,13 +334,15 @@ namespace TestCaseByCase
                 Console.WriteLine("Deposit error");
                 driver.Quit();
             }
-            
+
 
             FindElementByxPath("/html/body/div[4]/div/div[2]/div/div/div/div/div/div/form/div/div/div[2]/div/div/div[2]/div[2]/div/div/span").Click();
             Thread.Sleep(1000);
             //Close modal
             //FindElementByxPath("/html/body/div[5]/div/div[2]/div/div/div/div/div/div/form/div/div/div[2]/div/div/div[2]/div[3]/form/div/div/section[1]/div/button").Click();
             FindElementByxPath("/html/body/div[4]/div/div[2]/div/div/div/div/div/div/form/div/div/div[2]/div/div/div[2]/div[3]/form/div/div/section[2]/div/table/tbody/tr/td").Click();
+
+            FindElementByxPath("/html/body/div[4]/div/div[2]/div/div/div/div/div/div/form/div/div/div[2]/div/div/div[2]/div[4]/div/div/div/div[6]/ul/li[2]/p/span");
             Console.WriteLine("Pass deposit");
             Thread.Sleep(6000);
             driver.Quit();
@@ -411,22 +391,28 @@ namespace TestCaseByCase
         [TestMethod]
         public void Withdraw()
         {
-
             //Declare variable
             By dropdown = By.XPath("/html/body/header/div[2]/div[3]/div[2]/span");
             string sreachEth = "ETH";
+            string address = "0x828B4f6Ba4E172D003811b14b2625e24DFff3bb6";
             // Navigate to a page
 
             Login(email, pw);
-            // deposit
+            // Withdraw
 
             FindById("search-coin-funding").SendKeys(sreachEth);
             Thread.Sleep(2000);
             action(Keys.Enter);
             Thread.Sleep(2000);
             FindElementByxPath("/html/body/div[4]/div/div[2]/section[2]/div/div[2]/div[1]/div/table/tbody/tr[1]/td[4]/div/a[2]").Click();
-            string element = FindElementByxPath("/html/body/div[4]/div[1]/div[2]/section[2]/div/div/div/form/div/div[1]/div[2]/div[1]/div/div/span[1]").Text;
-            if (element != sreachEth)
+            // Test form
+            FindElementByxPath("/html/body/div[4]/div[1]/div[2]/section[2]/div/div/div/form/div/div[2]/div[2]/input").SendKeys(address);
+            Thread.Sleep(2000);
+            FindElementByxPath("/html/body/div[4]/div[1]/div[2]/section[2]/div/div/div/form/div/div[2]/div[2]/div[2]").Click();
+            Thread.Sleep(2000);
+            FindElementByxPath("/html/body/div[4]/div[1]/div[2]/section[2]/div/div/div/form/div/div[2]/div[2]/div[3]/form/div/div/section[2]/div/table/tbody/tr[1]/td").Click();
+            string element = FindElementByxPath("/html/body/div[4]/div[1]/div[2]/section[2]/div/div/div/form/div/div[5]/div/input").GetAttribute("value");
+            if (element != "Withdraw")
             {
                 Console.WriteLine("Withdraw error");
                 driver.Quit();
@@ -435,6 +421,11 @@ namespace TestCaseByCase
             Thread.Sleep(3000);
             driver.Quit();
         }
+
+        // email: Nguyenvanquang2k.00@gmail.com
+        //  pw: 123456Aa@
+
+
 
         [TestMethod]
         public void SignIn_Email_Case1_EmptyInput()
@@ -453,10 +444,12 @@ namespace TestCaseByCase
                 return;
             }
             Console.WriteLine("Đã tìm thấy nội dung thông báo lỗi");
-            Thread.Sleep(2000);
+            Thread.Sleep(5000);
             driver.Quit();
         }
 
+        string email_test = "nguyennhatquang16ksaaaadsaddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd.00@gmail.com";
+        string pw_test = "1234";
         [TestMethod]
         public void SignIn_Email_Case2()
         {
@@ -468,9 +461,10 @@ namespace TestCaseByCase
 
             //Sign in
             //Input
-            FindByName("email").SendKeys("nguyen@gmail.com");
-            FindByName("password").SendKeys("75775752742157757557");
+            FindByName("email").SendKeys(email_test);
+            FindByName("password").SendKeys(pw_test);
             FindElementByxPath("//*[@id=\"keepsign\"]").Click();
+            Thread.Sleep(3000);
             FindElementByxPath("//*[@id='signin']/div[3]/div[2]/button").Click();
             //Output
             if (!FindElementByxPath("//*[@id='signin']/div[2]/div[1]").Displayed)
@@ -544,19 +538,6 @@ namespace TestCaseByCase
             driver.Quit();
         }
 
-
-        public Task<string> TakesALongTimeToProcess(
-            string word)
-        {
-            return Task.Run(() =>
-            {
-                Task.Delay(1000);
-                return word;
-
-            });
-        }
-
-
         [TestMethod]
         public void TestLogout()
         {
@@ -609,13 +590,11 @@ namespace TestCaseByCase
             driver.Quit();
         }
 
-
-
         [TestMethod]
         public void TestSignUpEmail()
         {
             OpenBrowser();
-            string actualUrl = "http://127.0.0.1:8000/user";
+            string expectedUrl = "http://127.0.0.1:8000/user/verifycode-signup";
 
             var picture = FindElementByxPath("/html/body/nav/div/a");
             if (!picture.Displayed) {
@@ -639,24 +618,32 @@ namespace TestCaseByCase
                 chooseVN.Click();
                 Thread.Sleep(2000);
 
-                var chooseCN = FindElementByxPath("/html/body/nav/div/div/div/ul/li[3]/div/ul/li[3]/a");
-                if (!chooseCN.Displayed)
-                {
-                    Console.WriteLine("Choose lang CN failed");
-                    Thread.Sleep(1000);
-                    driver.Quit();
-                }
-                chooseCN.Click();
-                Thread.Sleep(2000);
+                //FindElementByxPath("/html/body/nav/div/div/div/ul/li[3]/div/ul/li[1]/a").Click();
+                //var chooseCN = FindElementByxPath("/html/body/nav/div/div/div/ul/li[3]/div/ul/li[3]/a");
+                //if (!chooseCN.Displayed)
+                //{
+                //    Console.WriteLine("Choose lang CN failed");
+                //    Thread.Sleep(1000);
+                //    driver.Quit();
+                //}
+                //chooseCN.Click();
+                //Thread.Sleep(2000);
             }
+            FindElementByxPath("/html/body/nav/div/div/div/ul/li[2]/div/div/a").Click();
             //input
-            FindByName("email").SendKeys("ngyenvanquang2k.00@gmail.com");
-            FindByName("password").SendKeys("123456Aa@");
+            FindByName("email").SendKeys(email_test);
+            FindByName("password").SendKeys(pw_test);
             FindByName("check18").Click();
-            FindElementByxPath("/html/body/div/div/div[2]/div[1]/div[3]/div/span[2]").Click();
             awaiting(10);
             FindElementByxPath("//*[@id=\"create-account\"]").Click();
 
+           // SummaryDisplayed(By.XPath("/html/body/div[2]/div/div[2]/div[1]/form/div/div[1]/div"));
+            SummaryDisplayed(By.XPath("/html/body/div/div/div[2]/div[1]/form/div/div[2]/div[1]"));
+
+
+            string actualUrl = driver.Url;
+            Assert.AreEqual(expectedUrl, actualUrl, "Sign Up Failed");
+            webDriverAwait(20, By.Name("verify_code"));
             var verify = FindByName("verify_code");
             if (!verify.Displayed)
             {
@@ -664,9 +651,7 @@ namespace TestCaseByCase
                 Thread.Sleep(1000);
                 driver.Quit();
             }
-            string expectedUrl = driver.Url;
-
-            Assert.AreEqual(actualUrl, expectedUrl, "Register sign up email successfully");
+            Assert.AreEqual(expectedUrl, actualUrl, "Register sign up email successfully");
             Thread.Sleep(1000);
             driver.Quit();
         }
