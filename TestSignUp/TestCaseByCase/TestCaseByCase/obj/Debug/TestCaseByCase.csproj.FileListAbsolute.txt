@@ -30,6 +30,7 @@ C:\Tom\Test\unit-test-c\TestSignUp\TestCaseByCase\TestCaseByCase\bin\Debug\Micro
 C:\Tom\Test\unit-test-c\TestSignUp\TestCaseByCase\TestCaseByCase\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll
 C:\Tom\Test\unit-test-c\TestSignUp\TestCaseByCase\TestCaseByCase\bin\Debug\ReportPortal.Client.dll
 C:\Tom\Test\unit-test-c\TestSignUp\TestCaseByCase\TestCaseByCase\bin\Debug\ReportPortal.Shared.dll
+C:\Tom\Test\unit-test-c\TestSignUp\TestCaseByCase\TestCaseByCase\bin\Debug\SeleniumExtras.WaitHelpers.dll
 C:\Tom\Test\unit-test-c\TestSignUp\TestCaseByCase\TestCaseByCase\bin\Debug\WebDriver.dll
 C:\Tom\Test\unit-test-c\TestSignUp\TestCaseByCase\TestCaseByCase\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.xml
 C:\Tom\Test\unit-test-c\TestSignUp\TestCaseByCase\TestCaseByCase\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.xml
@@ -37,9 +38,8 @@ C:\Tom\Test\unit-test-c\TestSignUp\TestCaseByCase\TestCaseByCase\bin\Debug\Repor
 C:\Tom\Test\unit-test-c\TestSignUp\TestCaseByCase\TestCaseByCase\bin\Debug\ReportPortal.Client.xml
 C:\Tom\Test\unit-test-c\TestSignUp\TestCaseByCase\TestCaseByCase\bin\Debug\ReportPortal.Shared.pdb
 C:\Tom\Test\unit-test-c\TestSignUp\TestCaseByCase\TestCaseByCase\bin\Debug\ReportPortal.Shared.xml
-C:\Tom\Test\unit-test-c\TestSignUp\TestCaseByCase\TestCaseByCase\obj\Debug\TestCaseByCase.csprojAssemblyReference.cache
 C:\Tom\Test\unit-test-c\TestSignUp\TestCaseByCase\TestCaseByCase\obj\Debug\TestCaseByCase.csproj.CoreCompileInputs.cache
 C:\Tom\Test\unit-test-c\TestSignUp\TestCaseByCase\TestCaseByCase\obj\Debug\TestCaseByCase.csproj.CopyComplete
 C:\Tom\Test\unit-test-c\TestSignUp\TestCaseByCase\TestCaseByCase\obj\Debug\TestCaseByCase.dll
 C:\Tom\Test\unit-test-c\TestSignUp\TestCaseByCase\TestCaseByCase\obj\Debug\TestCaseByCase.pdb
-C:\Tom\Test\unit-test-c\TestSignUp\TestCaseByCase\TestCaseByCase\bin\Debug\SeleniumExtras.WaitHelpers.dll
+C:\Tom\Test\unit-test-c\TestSignUp\TestCaseByCase\TestCaseByCase\obj\Debug\TestCaseByCase.csprojAssemblyReference.cache

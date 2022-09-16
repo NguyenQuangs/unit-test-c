@@ -12,6 +12,7 @@ using SeleniumExtras.WaitHelpers;
 using System.Threading.Tasks;
 using System.Threading;
 
+
 namespace TestCaseByCase
 {
     [TestClass]
@@ -145,6 +146,8 @@ namespace TestCaseByCase
 
     public class WebBrowser
     {
+        static int waitingTime = 10;
+
         public IWebDriver driver = null;
         public ChromeOptions chromeOptions;
         string url = "http://127.0.0.1:8000";
@@ -164,6 +167,15 @@ namespace TestCaseByCase
         }
         public IWebDriver OpenBrowser()
         {
+            driver.Manage().Window.Maximize();
+            driver.Navigate().GoToUrl(url);
+            return driver;
+        }
+
+        public IWebDriver OpenBrowser(string url)
+        {
+            //input staging / production environment
+
             driver.Manage().Window.Maximize();
             driver.Navigate().GoToUrl(url);
             return driver;
@@ -225,59 +237,59 @@ namespace TestCaseByCase
         }
 
         //Await class
-        public IAlert WaitUntil_AlertIsPresent(int timeoutInSeconds = 30)
+        public IAlert WaitUntil_AlertIsPresent(int waitingTime)
         {
-            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeoutInSeconds));
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(waitingTime));
             return wait.Until(ExpectedConditions.AlertIsPresent());
         }
-        public IWebElement WaitUntil_ElementExists(By by, int timeoutInSeconds = 30)
+        public IWebElement WaitUntil_ElementExists(By by, int waitingTime)
         {
-            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeoutInSeconds));
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(waitingTime));
             return wait.Until(ExpectedConditions.ElementExists(by));
         }
-        public IWebElement WaitUntil_ElementIsVisible(By by, int timeoutInSeconds = 30)
+        public IWebElement WaitUntil_ElementIsVisible(By by, int waitingTime)
         {
-            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeoutInSeconds));
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(waitingTime));
             return wait.Until(ExpectedConditions.ElementIsVisible(by));
         }
-        public bool WaitUntil_ElementSelectionStateToBe(By by, bool selected, int timeoutInSeconds = 30)
+        public bool WaitUntil_ElementSelectionStateToBe(By by, bool selected, int waitingTime)
         {
-            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeoutInSeconds));
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(waitingTime));
             return wait.Until(ExpectedConditions.ElementSelectionStateToBe(by, selected));
         }
-        public bool WaitUntil_ElementSelectionStateToBe(IWebElement element, bool expectedState, int timeoutInSeconds = 90)
+        public bool WaitUntil_ElementSelectionStateToBe(IWebElement element, bool expectedState, int waitingTime)
         {
-            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeoutInSeconds));
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(waitingTime));
             return wait.Until(ExpectedConditions.ElementSelectionStateToBe(element, expectedState));
         }
-        public IWebElement WaitUntil_ElementToBeClickable(IWebElement element, int timeoutInSeconds = 90)
+        public IWebElement WaitUntil_ElementToBeClickable(IWebElement element, int waitingTime)
         {
-            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeoutInSeconds));
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(waitingTime));
             return wait.Until(ExpectedConditions.ElementToBeClickable(element));
         }
-        public IWebElement WaitUntil_ElementToBeClickable(By by, int timeoutInSeconds = 30)
+        public IWebElement WaitUntil_ElementToBeClickable(By by, int waitingTime)
         {
-            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeoutInSeconds));
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(waitingTime));
             return wait.Until(ExpectedConditions.ElementToBeClickable(by));
         }
-        public bool WaitUntil_InvisibilityOfElementLocated(By by, int timeoutInSeconds = 30)
+        public bool WaitUntil_InvisibilityOfElementLocated(By by, int waitingTime)
         {
-            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeoutInSeconds));
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(waitingTime));
             return wait.Until(ExpectedConditions.InvisibilityOfElementLocated(by));
         }
-        public bool WaitUntil_InvisibilityOfElementWithText(By by, string text, int timeoutInSeconds = 30)
+        public bool WaitUntil_InvisibilityOfElementWithText(By by, string text, int waitingTime)
         {
-            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeoutInSeconds));
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(waitingTime));
             return wait.Until(ExpectedConditions.InvisibilityOfElementWithText(by, text));
         }
-        public bool WaitUntil_StalenessOf(IWebElement element, int timeoutInSeconds = 90)
+        public bool WaitUntil_StalenessOf(IWebElement element, int waitingTime)
         {
-            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeoutInSeconds));
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(waitingTime));
             return wait.Until(ExpectedConditions.StalenessOf(element));
         }
-        public bool WaitUntil_TextToBePresentInElement(IWebElement element, string str, int timeoutInSeconds = 90)
+        public bool WaitUntil_TextToBePresentInElement(IWebElement element, string str, int waitingTime)
         {
-            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeoutInSeconds));
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(waitingTime));
             return wait.Until(ExpectedConditions.TextToBePresentInElement(element, str));
         }
 
@@ -290,10 +302,18 @@ namespace TestCaseByCase
         {
             return driver.FindElement(By.Id(id));
         }
+        public IWebElement FindByCssSelector(string css)
+        {
+            return driver.FindElement(By.CssSelector(css));
+        }
 
         public IWebElement FindByName(string name)
         {
             return driver.FindElement(By.Name(name));
+        }
+        public IWebElement FindByClassName(string className)
+        {
+            return driver.FindElement(By.ClassName(className));
         }
 
         public Actions action(string keyAction)
@@ -304,20 +324,42 @@ namespace TestCaseByCase
         }
 
         //Using click Action Selenium
-        public Actions mouseAction(IWebElement element)
+        public Actions mouseClickAction(IWebElement element)
         {
             Actions actions = new Actions(driver);
             actions.MoveToElement(element).Click().Build().Perform();
             return actions;
         }
 
-        //using javascript click
-        public IJavaScriptExecutor clickElement(IWebElement element)
+        //Using click Action Selenium
+        public void mouseAction(IWebElement element)
+        {
+            IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
+             js.ExecuteScript("arguments[0].scrollIntoView();", element);
+        }
+
+        public IWebElement FindLinkText(string linkTxt)
+        {
+        return driver.FindElement(By.LinkText(linkTxt));
+        }
+
+    //public Actions selectText(IWebElement findElementByName)
+    //{
+    //    //create select element object 
+    //    SelectElement selectElement = new SelectElement(findElementByName);
+
+    //    //select by value
+    //    selectElement.SelectByValue("Jr.High");
+    //    // select by text
+    //    selectElement.SelectByText("HighSchool");
+    //}
+
+    //using javascript click
+    public IJavaScriptExecutor clickElement(IWebElement element)
         {
             string javascript = "arguments[0].click()";
             IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)driver;
             jsExecutor.ExecuteScript(javascript, element);
-            Thread.Sleep(2000);
             return jsExecutor;
         }
 
@@ -374,6 +416,15 @@ namespace TestCaseByCase
             stream.Write("{0} {1}\t", DateTime.Now.ToLongTimeString(), DateTime.Now.ToLongDateString());
             stream.Write("\\T{0}", Message);
             stream.Flush();
+        }
+
+        public void SignUpAssert(string expected, string actual)
+        {
+            Assert.AreEqual(actual, expected);
+        }
+        public void SignUpAsserMessage(string expectedMsg, string actualMsg)
+        {
+            Assert.AreEqual(actualMsg, expectedMsg);
         }
 
     }

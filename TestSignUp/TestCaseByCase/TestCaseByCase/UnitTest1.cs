@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using static TestCaseByCase.HelperTest;
 using System.Runtime.CompilerServices;
-    
+
 namespace TestCaseByCase
 {
     [TestClass]
@@ -31,114 +31,11 @@ namespace TestCaseByCase
             Assert.AreEqual(true, IsTrueFile);
         }
 
-        //Test input Myads
-        public void TestInputMyAds(string amount, string min, string max)
-        {
-            var textMyAds = FindElementByxPath("/html/body/header/div[1]/a[3]/div");
-            if (!textMyAds.Displayed)
-            {
-                Console.WriteLine("Không tìm thấy text MyAds");
-                driver.Quit();
-            }
-            textMyAds.Click();
-            Thread.Sleep(3000);
-            //click post my ads
-            var btnPost = FindElementByxPath("/html/body/form/section/div/div[2]/div[2]/input");
-            if (!btnPost.Displayed)
-            {
-                Console.WriteLine("Không tìm thấy button Post My Ads");
-                driver.Quit();
-            }
-            btnPost.Click();
-            Thread.Sleep(1000);
-
-            //if (FindElementByxPath("/html/body/div[4]/div/section").Displayed)
-            //{
-            //    string expected_case1 = "http://127.0.0.1:8000/user/kyc";
-            //    Console.WriteLine("Chưa KYC khi Post My Ads");
-            //    var btnKYC = FindElementByxPath("/html/body/div[4]/div/section/div/div[3]/a");
-            //    if (!btnKYC.Displayed)
-            //    {
-            //        Console.WriteLine("Không hiển thị nút KYC");
-            //        return;
-
-            //    }
-            //    btnKYC.Click();
-            //    Console.WriteLine("KYC loaded page success");
-            //    Thread.Sleep(2000);
-            //    string actual_case1 = driver.Url;
-            //    Assert.AreEqual(expected_case1, actual_case1, "Failed verify KYC");
-                
-            //}
-
-
-            FindById("ETH").Click();
-            FindById("VND").Click();
-            var btnNext = FindById("btnNext");
-            if (!btnNext.Displayed)
-            {
-                Console.WriteLine("Không tìm thấy button Next");
-                driver.Quit();
-            }
-            btnNext.Submit();
-
-            FindById("total_amount").SendKeys(amount);
-            FindById("order_min").SendKeys(min);
-            FindById("order_max").SendKeys(max);
-            Thread.Sleep(4000);
-            FindById("btnAdd").Click();
-            //default click bank transfer
-            awaiting(2);
-            //driver.FindElement(By.ClassName("method-text")).Click();
-            Thread.Sleep(2000);
-            clickElement(driver.FindElement(By.ClassName("method-text")));
-
-            var btnNext_2 = FindElementByxPath("//*[@id='btnNext']");
-            if (!btnNext_2.Displayed)
-            {
-                Console.WriteLine("Không tìm thấy button Next");
-                driver.Quit();
-            }
-            clickElement(btnNext_2);
-            Thread.Sleep(2000);
-
-            //post my ads
-            var btnPost_2 = FindById("btnPosAds");
-            if (!btnPost_2.Displayed)
-            {
-                Console.WriteLine("Không tìm thấy button Next");
-                driver.Quit();
-            }
-            clickElement(btnPost_2);
-            FindElementByxPath("/html/body/form/div/section/div[2]/div/div/div[3]/div/div[2]/div/div/section/a").Click();
-
-            MyAds myAds = new MyAds { amount = "1000", min = "1000", max = "5000", pmMethod = "Bank Transfer" };
-            myAds.amount.Contains(amount);
-            myAds.min.Contains(min);
-            myAds.max.Contains(max);
-            Assert.AreEqual(myAds, myAds, "Failed");
-            Console.WriteLine("Post My Ads succesfully");
-            driver.Quit();
-
-
-           // var textAmount = FindElementByxPath("/html/body/form/div/section[2]/div/table/tbody/tr[2]/td[2]/div/p[1]");
-          
-
-
-        }
+     
         //2. range input: amount, min, max
         //1000 usdt
         //min 1.000.000
         //max 5.000.000
-        [TestMethod]
-        public void TestCreateP2POrder()
-        {
-            //setup test
-            OpenBrowser();
-            Login(email, pw);
-            TestInputMyAds("0.5", "150000", "20000000");
-        }
-
         [TestMethod]
         public void TestCreateP2POrder_Case2()
         {
@@ -261,7 +158,7 @@ namespace TestCaseByCase
                 Thread.Sleep(500);
                 driver.Quit();
             }
-            
+
             var tbCoin = FindElementByxPath("/html/body/section[2]/section");
             if (!tbCoin.Displayed)
             {
@@ -315,80 +212,6 @@ namespace TestCaseByCase
         }
 
         [TestMethod]
-        public void Deposit()
-        {
-            //Declare variable
-            By dropdown = By.XPath("/html/body/header/div[2]/div[3]/div[2]/span");
-            string sreachEth = "ETH";
-            // Navigate to a page
-            Login(email, pw);
-            // deposit
-            FindById("search-coin-funding").SendKeys(sreachEth);
-            Thread.Sleep(2000);
-            action(Keys.Enter);
-            Thread.Sleep(2000);
-            FindElementByxPath("/html/body/div[4]/div/div[2]/section[2]/div/div[2]/div[1]/div/table/tbody/tr[1]/td[4]/div/a[1]").Click();
-            string element = FindElementByxPath("/html/body/div[4]/div/div[2]/div/div/div/div/div/div/form/div/div/div[1]/div/div/div[2]/div/div/div/div[1]/div/div/span[1]").Text;
-            if (element != sreachEth)
-            {
-                Console.WriteLine("Deposit error");
-                driver.Quit();
-            }
-
-
-            FindElementByxPath("/html/body/div[4]/div/div[2]/div/div/div/div/div/div/form/div/div/div[2]/div/div/div[2]/div[2]/div/div/span").Click();
-            Thread.Sleep(1000);
-            //Close modal
-            //FindElementByxPath("/html/body/div[5]/div/div[2]/div/div/div/div/div/div/form/div/div/div[2]/div/div/div[2]/div[3]/form/div/div/section[1]/div/button").Click();
-            FindElementByxPath("/html/body/div[4]/div/div[2]/div/div/div/div/div/div/form/div/div/div[2]/div/div/div[2]/div[3]/form/div/div/section[2]/div/table/tbody/tr/td").Click();
-
-            FindElementByxPath("/html/body/div[4]/div/div[2]/div/div/div/div/div/div/form/div/div/div[2]/div/div/div[2]/div[4]/div/div/div/div[6]/ul/li[2]/p/span");
-            Console.WriteLine("Pass deposit");
-            Thread.Sleep(6000);
-            driver.Quit();
-        }
-        [TestMethod]
-        public void Deposit_Case1()
-        {
-            //Declare variable
-            By dropdown = By.XPath("/html/body/header/div[2]/div[3]/div[2]/span");
-            string sreachEth = "ETH";
-            // Navigate to a page
-            Login(email, pw);
-            // deposit
-            var textDeposit = FindElementByxPath("/html/body/header/div[2]/div[2]/a[3]");
-            if (!textDeposit.Displayed)
-            {
-                Console.WriteLine("Không tìm thấy text deposit");
-                driver.Quit();
-            }
-            textDeposit.Click();
-            Thread.Sleep(1000);
-            FindElementByxPath("/html/body/div[4]/div/div[2]/div/div/div/div/div/div/form/div/div/div[1]/div/div/div[2]/div/div/div/div[1]/div/div/span").Click();
-
-            FindElementByxPath("/html/body/div[4]/div/div[2]/div/div/div/div/div/div/form/div/div/div[1]/div/div/div[2]/div/div/div/div[2]/div/div/section/div[1]/div/input").SendKeys(sreachEth);
-            Thread.Sleep(2000);
-            action(Keys.Enter);
-            Thread.Sleep(2000);
-            FindElementByxPath("/html/body/div[4]/div/div[2]/section[2]/div/div[2]/div[1]/div/table/tbody/tr[1]/td[4]/div/a[1]").Click();
-            string element = FindElementByxPath("/html/body/div[4]/div/div[2]/div/div/div/div/div/div/form/div/div/div[1]/div/div/div[2]/div/div/div/div[1]/div/div/span[1]").Text;
-            if (element != sreachEth)
-            {
-                Console.WriteLine("Deposit error");
-                driver.Quit();
-            }
-
-
-            FindElementByxPath("/html/body/div[4]/div/div[2]/div/div/div/div/div/div/form/div/div/div[2]/div/div/div[2]/div[2]/div/div/span").Click();
-            Thread.Sleep(1000);
-            //Close modal
-            //FindElementByxPath("/html/body/div[5]/div/div[2]/div/div/div/div/div/div/form/div/div/div[2]/div/div/div[2]/div[3]/form/div/div/section[1]/div/button").Click();
-            FindElementByxPath("/html/body/div[4]/div/div[2]/div/div/div/div/div/div/form/div/div/div[2]/div/div/div[2]/div[3]/form/div/div/section[2]/div/table/tbody/tr/td").Click();
-            Console.WriteLine("Pass deposit");
-            Thread.Sleep(6000);
-            driver.Quit();
-        }
-        [TestMethod]
         public void Withdraw()
         {
             //Declare variable
@@ -424,119 +247,6 @@ namespace TestCaseByCase
 
         // email: Nguyenvanquang2k.00@gmail.com
         //  pw: 123456Aa@
-
-
-
-        [TestMethod]
-        public void SignIn_Email_Case1_EmptyInput()
-        {
-            //set up 
-            OpenBrowser();
-            FindElementByxPath("//*[@id='navbarButtonsExample']/div/ul/li[1]").Click();
-            FindElementByxPath("//*[@id='signin']/div[3]/div[2]/button").Click();
-            Thread.Sleep(3000);
-
-            var errInput = FindElementByxPath("//*[@id='signin']/div[1]/div[2]");
-            var errPw = FindElementByxPath("//*[@id='signin']/div[2]/div[1]");
-            if (!errInput.Displayed || !errPw.Displayed)
-            {
-                Console.WriteLine("Not found message error");
-                return;
-            }
-            Console.WriteLine("Đã tìm thấy nội dung thông báo lỗi");
-            Thread.Sleep(5000);
-            driver.Quit();
-        }
-
-        string email_test = "nguyenvanquang2k.00@gmail.com";
-        string pw_test = "123456Aa@";
-        [TestMethod]
-        public void SignIn_Email_Case2()
-        {
-            //set up 
-            OpenBrowser();
-            var expectedUrl = "http://127.0.0.1:8000/user/signin-email";
-            FindElementByxPath("//*[@id='navbarButtonsExample']/div/ul/li[1]").Click();
-            Thread.Sleep(3000);
-
-            //Sign in
-            //Input
-            FindByName("email").SendKeys(email_test);
-            FindByName("password").SendKeys(pw_test);
-            FindElementByxPath("//*[@id=\"keepsign\"]").Click();
-            Thread.Sleep(3000);
-            FindElementByxPath("//*[@id='signin']/div[3]/div[2]/button").Click();
-            //Output
-            if (!FindElementByxPath("//*[@id='signin']/div[2]/div[1]").Displayed)
-            {
-                Console.WriteLine("Không hiển thị message 'user not exists'");
-                Console.WriteLine("Không hiển thị message 'Your account has been deactive. Please contact Admin for assisstance'");
-                return;
-            }
-            Console.WriteLine("Hiển thị message 'user not exists'");
-            Console.WriteLine("Hiển thị message 'Your account has been deactive. Please contact Admin for assisstance'");
-
-            //verify sign-in email
-            string actualUrl = driver.Url;
-            Assert.AreEqual(expectedUrl, actualUrl, "Sign in case 2 test validate input successfully");
-            Thread.Sleep(2000);
-            driver.Quit();
-        }
-
-        [TestMethod]
-        public void SignIn_Mobile_Case1_EmptyInput()
-        {
-            //set up 
-            OpenBrowser();
-            FindElementByxPath("//*[@id='navbarButtonsExample']/div/ul/li[1]").Click();
-            FindElementByxPath("/html/body/div/div/div[2]/div[1]/div[2]/div/span[2]").Click();
-            FindElementByxPath("//*[@id='signin']/div[3]/div[2]/button").Click();
-            Thread.Sleep(3000);
-
-            var errInput = FindElementByxPath("//*[@id='signin']/div[1]/div[2]/div");
-            var errPw = FindElementByxPath("//*[@id='signin']/div[2]/div[1]");
-            if (!errInput.Displayed || !errPw.Displayed)
-            {
-                Console.WriteLine("Not found message error");
-                return;
-            }
-            Console.WriteLine("Đã tìm thấy nội dung thông báo lỗi");
-            Thread.Sleep(2000);
-            driver.Quit();
-        }
-
-        [TestMethod]
-        public void SignIn_Mobile_Case2()
-        {
-            //set up 
-            OpenBrowser();
-            var expectedUrl = "http://127.0.0.1:8000/user/signin-mobile";
-            FindElementByxPath("//*[@id='navbarButtonsExample']/div/ul/li[1]").Click();
-            FindElementByxPath("/html/body/div/div/div[2]/div[1]/div[2]/div/span[2]/a").Click();
-            Thread.Sleep(3000);
-
-            //Sign in
-            //Input
-            FindByName("mobile").SendKeys("326566732");
-            FindByName("password").SendKeys("12322456Aa@");
-            FindElementByxPath("//*[@id=\"keepsign\"]").Click();
-            FindElementByxPath("//*[@id='signin']/div[3]/div[2]/button").Click();
-            //Output
-            if (!FindElementByxPath("/html/body/div/div/div[2]/div[1]/form/div/div[2]/div[1]").Displayed)
-            {
-                Console.WriteLine("Không hiển thị message 'user not exists'");
-                Console.WriteLine("Không hiển thị message 'Your account has been deactive. Please contact Admin for assisstance'");
-                driver.Quit();
-            }
-            Console.WriteLine("Hiển thị message 'user not exists'");
-            Console.WriteLine("Hiển thị message 'Your account has been deactive. Please contact Admin for assisstance'");
-
-            //verify sign-in email
-            string actualUrl = driver.Url;
-            Assert.AreEqual(expectedUrl, actualUrl, "Sign in case 2 test validate input successfully");
-            Thread.Sleep(2000);
-            driver.Quit();
-        }
 
         [TestMethod]
         public void TestLogout()
@@ -583,80 +293,16 @@ namespace TestCaseByCase
 
             FindElementByxPath("/html/body/header/div[2]/div[3]/div[2]/ul/li[7]/a").Click();
 
-            var expectedUrl = driver.Url ;
+            var expectedUrl = driver.Url;
 
-            Assert.AreEqual( expectedUrl, actualUrl, "Logout Fail");
+            Assert.AreEqual(expectedUrl, actualUrl, "Logout Fail");
             Thread.Sleep(2000);
             driver.Quit();
         }
 
-        [TestMethod]
-        public void TestSignUpEmail()
-        {
-            OpenBrowser();
-            string expectedUrl = "http://127.0.0.1:8000/user/verifycode-signup";
-
-            var picture = FindElementByxPath("/html/body/nav/div/a");
-            if (!picture.Displayed) {
-                Console.WriteLine("Not found logo");
-                Thread.Sleep(1000);
-                driver.Quit();
-            }
-
-            var lang = FindElementByxPath("/html/body/nav/div/div/div/ul/li[3]/div/a/img");
-            if (lang.Displayed)
-            {
-                Console.WriteLine("Success");
-                lang.Click();
-                var chooseVN = FindElementByxPath("/html/body/nav/div/div/div/ul/li[3]/div/ul/li[1]/a");
-                if (!chooseVN.Displayed)
-                {
-                    Console.WriteLine("Choose lang VN failed");
-                    Thread.Sleep(1000);
-                    driver.Quit();
-                }
-                chooseVN.Click();
-                Thread.Sleep(2000);
-
-                //FindElementByxPath("/html/body/nav/div/div/div/ul/li[3]/div/ul/li[1]/a").Click();
-                //var chooseCN = FindElementByxPath("/html/body/nav/div/div/div/ul/li[3]/div/ul/li[3]/a");
-                //if (!chooseCN.Displayed)
-                //{
-                //    Console.WriteLine("Choose lang CN failed");
-                //    Thread.Sleep(1000);
-                //    driver.Quit();
-                //}
-                //chooseCN.Click();
-                //Thread.Sleep(2000);
-            }
-            FindElementByxPath("/html/body/nav/div/div/div/ul/li[2]/div/div/a").Click();
-            //input
-            FindByName("email").SendKeys(email_test);
-            FindByName("password").SendKeys(pw_test);
-            FindByName("check18").Click();
-            awaiting(10);
-            FindElementByxPath("//*[@id=\"create-account\"]").Click();
-
-           // SummaryDisplayed(By.XPath("/html/body/div[2]/div/div[2]/div[1]/form/div/div[1]/div"));
-            //SummaryDisplayed(By.XPath("/html/body/div/div/div[2]/div[1]/form/div/div[2]/div[1]"));
-
-
-            string actualUrl = driver.Url;
-            Assert.AreEqual(expectedUrl, actualUrl, "Sign Up Failed");
-            
-            var verify = FindByName("verify_code");
-            if (!verify.Displayed)
-            {
-                Console.WriteLine("Not found input verify code");
-                Thread.Sleep(1000);
-                driver.Quit();
-            }
-            WaitForLoadElement(verify);
-            FindById("verify").Click();
-            Assert.AreEqual(expectedUrl, actualUrl, "Register sign up email successfully");
-            Thread.Sleep(1000);
-            driver.Quit();
-        }
+        string email_test = "dwadaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa12312321.00@gmail.com";
+        string pw_test = "123456Aa@";
+    
 
         [TestMethod]
         public void TestSignUpMobile()
@@ -698,6 +344,16 @@ namespace TestCaseByCase
             Assert.AreEqual(actualUrl, expectedUrl, "Register sign up mobile successfully");
             Thread.Sleep(1000);
             driver.Quit();
+        }
+
+        void TestSignUp(string url, string email, string password, string code, IWebDriver driver)
+        {
+            // Quang 
+        }
+
+        void SignupAssert(IWebDriver driver, string errorMessage)
+        {
+            //
         }
     }
 }
