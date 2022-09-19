@@ -26,7 +26,7 @@ namespace TestCaseByCase
         [TestCategory("Core Function")]
         public void TestForgotPasswordEmail(string email, string actualMsg)
         {
-            OpenBrowser();
+            OpenBrowser(urlLocal);
             clickElement(driver.FindElement(By.CssSelector("a[href='/user/reset-password']")));
             Thread.Sleep(1000);
             FindByName("email").SendKeys(email);

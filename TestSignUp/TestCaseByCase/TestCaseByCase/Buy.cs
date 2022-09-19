@@ -21,7 +21,7 @@ namespace TestCaseByCase
             var password = "123456Aa@";
             var amount = "200000";
             var content_chat = "Chuyen tien roi nhe ban";
-            OpenBrowser();
+            OpenBrowser(urlLocal);
             Login(email, password);
 
             Thread.Sleep(1000);

@@ -29,7 +29,7 @@ namespace TestCaseByCase
         [TestCategory("Core Function")]
         public void TestDepositWallet(string email, string password, string search, string actualMsg)
         {
-            OpenBrowser();
+            OpenBrowser(urlLocal);
             Login(email, password);
             //Declare variable
             By dropdown = By.XPath("/html/body/header/div[2]/div[3]/div[2]/span");

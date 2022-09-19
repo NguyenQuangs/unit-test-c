@@ -93,10 +93,9 @@ namespace TestCaseByCase
         [TestCategory("UI")]
         public void UI_Buy_Currency_Case1()
         {
-            var url = "http://127.0.0.1:8000";
             var email = "nguyenvanquang2k1.00@gmail.com";
             var password = "123456Aa@";
-            TestUIOnClikc(url, email, password);
+            TestUIOnClikc(urlLocal, email, password);
             FindElementByxPath("//div[normalize-space()='Buy']").Click();
             Thread.Sleep(1000);
             FindById("dropdownFiat").Click();
@@ -110,10 +109,9 @@ namespace TestCaseByCase
         [TestCategory("UI")]
         public void UI_Sell_Currency_Case1()
         {
-            var url = "http://127.0.0.1:8000";
             var email = "nguyenvanquang2k1.00@gmail.com";
             var password = "123456Aa@";
-            TestUIOnClikc(url, email, password);
+            TestUIOnClikc(urlLocal, email, password);
             FindByCssSelector("//div[normalize-space()='Sell']").Click();
             Thread.Sleep(1000);
             FindByCssSelector("div[id='currentFiat'] span[class='value-option py-1 tex']").Click();
@@ -126,15 +124,14 @@ namespace TestCaseByCase
         [TestCategory("UI")]
         public void UI_Icon_User_Case1_MyProfile()
         {
-            var url = "http://127.0.0.1:8000";
             var email = "nguyenvanquang2k1.00@gmail.com";
             var password = "123456Aa@";
-            TestUIOnClikc(url, email, password);
+            TestUIOnClikc(urlLocal, email, password);
             FindElementByxPath("//div[@class='css-11y6cix']//div[2]//span[1]//img[1]").Click();
             Thread.Sleep(1000);
             FindElementByxPath("//label[normalize-space()='My Profile']").Click();
             Thread.Sleep(1000);
-            SignUpAssert(url + "/user/profile", driver.Url);
+            SignUpAssert(urlLocal + "/user/profile", driver.Url);
 
            string name_email = FindByClassName("update-username-email").Text;
 
@@ -146,15 +143,14 @@ namespace TestCaseByCase
         [TestCategory("UI")]
         public void UI_Icon_User_Case2_Payment_Method()
         {
-            var url = "http://127.0.0.1:8000";
             var email = "nguyenvanquang2k1.00@gmail.com";
             var password = "123456Aa@";
-            TestUIOnClikc(url, email, password);
+            TestUIOnClikc(urlLocal, email, password);
             FindElementByxPath("//div[@class='css-11y6cix']//div[2]//span[1]//img[1]").Click();
             Thread.Sleep(1000);
             FindElementByxPath("//label[normalize-space()='Payment Methods']").Click();
             Thread.Sleep(1000);
-            SignUpAssert(url + "/payment", driver.Url);
+            SignUpAssert(urlLocal + "/payment", driver.Url);
             driver.Quit();
         }
 
@@ -162,15 +158,14 @@ namespace TestCaseByCase
         [TestCategory("UI")]
         public void UI_Icon_User_Case3_Security()
         {
-            var url = "http://127.0.0.1:8000";
             var email = "nguyenvanquang2k1.00@gmail.com";
             var password = "123456Aa@";
-            TestUIOnClikc(url, email, password);
+            TestUIOnClikc(urlLocal, email, password);
             FindElementByxPath("//div[@class='css-11y6cix']//div[2]//span[1]//img[1]").Click();
             Thread.Sleep(1000);
             FindElementByxPath("(//label[@class='text-dark fw-600'][normalize-space()='Security'])[1]").Click();
             Thread.Sleep(1000);
-            SignUpAssert(url + "/user/security", driver.Url);
+            SignUpAssert(urlLocal + "/user/security", driver.Url);
             Thread.Sleep(5000);
             driver.Quit();
         }
@@ -179,15 +174,14 @@ namespace TestCaseByCase
         [TestCategory("UI")]
         public void UI_Icon_User_Case4_Personal_Verification()
         {
-            var url = "http://127.0.0.1:8000";
             var email = "nguyenvanquang2k1.00@gmail.com";
             var password = "123456Aa@";
-            TestUIOnClikc(url, email, password);
+            TestUIOnClikc(urlLocal, email, password);
             FindElementByxPath("//div[@class='css-11y6cix']//div[2]//span[1]//img[1]").Click();
             Thread.Sleep(1000);
             FindElementByxPath("(//label[@class='text-dark fw-600'][normalize-space()='Personal Verification'])[1]").Click();
             Thread.Sleep(1000);
-            SignUpAssert(url + "/user/kyc", driver.Url);
+            SignUpAssert(urlLocal + "/user/kyc", driver.Url);
             driver.Quit();
         }
 
@@ -195,15 +189,14 @@ namespace TestCaseByCase
         [TestCategory("UI")]
         public void UI_Icon_User_Case5_Settings()
         {
-            var url = "http://127.0.0.1:8000";
             var email = "nguyenvanquang2k1.00@gmail.com";
             var password = "123456Aa@";
-            TestUIOnClikc(url, email, password);
+            TestUIOnClikc(urlLocal, email, password);
             FindElementByxPath("//div[@class='css-11y6cix']//div[2]//span[1]//img[1]").Click();
             Thread.Sleep(1000);
             FindElementByxPath("(//label[@class='text-dark fw-600'][normalize-space()='Settings'])[1]").Click();
             Thread.Sleep(1000);
-            SignUpAssert(url + "/user/setting", driver.Url);
+            SignUpAssert(urlLocal + "/user/setting", driver.Url);
             driver.Quit();
         }
 
@@ -218,7 +211,7 @@ namespace TestCaseByCase
         [TestCategory("UI")]
         public void Click_LinkHrefFooter()
         {
-            OpenBrowser();
+            OpenBrowser(urlLocal);
             string expectedF = "Payme- FAQ";
             mouseAction(FindElementByxPath("//h3[normalize-space()='FAQS']"));
             Thread.Sleep(10000);

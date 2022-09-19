@@ -29,7 +29,7 @@ namespace TestCaseByCase
         [TestCategory("Core Function")]
         public void TestWithdrawWallet(string email, string password, string search, string address, string amount, string actualMsg)
         {
-            OpenBrowser();
+            OpenBrowser(urlLocal);
             Login(email, password);
             FindById("search-coin-funding").SendKeys(search);
             Thread.Sleep(2000);
