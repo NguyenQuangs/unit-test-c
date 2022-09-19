@@ -18,6 +18,63 @@ namespace TestCaseByCase
         {
         }
 
+        //2. range input: amount, min, max
+        //1000 usdt
+        //min 1.000.000
+        //max 5.000.000
+        [TestMethod]
+        public void TestCreateP2POrder_Case2()
+        {
+            //setup test
+            OpenBrowser();
+
+            //1. Login 
+            //2. Select Post My - Ads
+
+            //input
+            //1
+            //2. range input: amount, min, max
+            //500 usdt
+            //min 10.000.000
+            //max 50.000.000
+            //3. remark, option
+
+            //click go
+
+            //VERIFY
+            //var list = htmlxxxx
+            //list.contain(xxxx)
+
+
+        }
+
+        [TestMethod]
+        public void TestCreateP2POrder_Case3_EmptyInput()
+        {
+            //setup test
+            OpenBrowser();
+
+            //1. Login 
+            //2. Select Post My - Ads
+
+            //input
+            //1
+            //2. range input: amount, min, max
+            //-100 usdt
+            //min 10.000.000
+            //max 50.000.000
+            //3. remark, option
+
+            //click go
+
+            //VERIFY
+            //expect error:
+            //var list = htmlxxxx
+            //list.contain(xxxx)
+
+
+        }
+
         [TestCategory("Core Function")]
         //Remind đã KYC rồi
         public void TestMyAdsIWantBuy(string email, string password, string amount, string min, string max)

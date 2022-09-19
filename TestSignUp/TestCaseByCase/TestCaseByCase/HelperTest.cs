@@ -151,6 +151,8 @@ namespace TestCaseByCase
         public IWebDriver driver = null;
         public ChromeOptions chromeOptions;
         string url = "http://127.0.0.1:8000";
+        string urlProduction = "https://payme.thangovn.com/";
+        string urlDev = "http://payme-dev.thangovn.com/";
         string expectedUrl = "http://127.0.0.1:8000/user";
 
 

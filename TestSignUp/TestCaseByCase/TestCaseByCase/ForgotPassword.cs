@@ -68,7 +68,7 @@ namespace TestCaseByCase
             driver.Quit();
         }
 
-        [TestMethod]
+        
         [TestCategory("Core Function")]
         public void loginGoogleAccount()
         {
@@ -107,7 +107,7 @@ namespace TestCaseByCase
 
 
         }
-        [TestMethod]
+        
         [TestCategory("Core Function")]
         public void loginGmail()
         {

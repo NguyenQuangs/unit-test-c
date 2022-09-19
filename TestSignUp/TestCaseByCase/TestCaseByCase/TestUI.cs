@@ -14,6 +14,7 @@ namespace TestCaseByCase
     public class TestUI :WebBrowser
     {
         [TestMethod]
+        [TestCategory("UI")]
         public void Click_NavBar()
         {
             var expected = "Payme- Signin Email";
@@ -88,13 +89,133 @@ namespace TestCaseByCase
             driver.Quit();
         }
 
-        public void TestUILandingPage(string ac)
+        [TestMethod]
+        [TestCategory("UI")]
+        public void UI_Buy_Currency_Case1()
         {
+            var url = "http://127.0.0.1:8000";
+            var email = "nguyenvanquang2k1.00@gmail.com";
+            var password = "123456Aa@";
+            TestUIOnClikc(url, email, password);
+            FindElementByxPath("//div[normalize-space()='Buy']").Click();
+            Thread.Sleep(1000);
+            FindById("dropdownFiat").Click();
+            Thread.Sleep(1000);
+            FindElementByxPath("//span[normalize-space()='VND']").Click();
+            Thread.Sleep(10000);
+            
+        }
+
+        [TestMethod]
+        [TestCategory("UI")]
+        public void UI_Sell_Currency_Case1()
+        {
+            var url = "http://127.0.0.1:8000";
+            var email = "nguyenvanquang2k1.00@gmail.com";
+            var password = "123456Aa@";
+            TestUIOnClikc(url, email, password);
+            FindByCssSelector("//div[normalize-space()='Sell']").Click();
+            Thread.Sleep(1000);
+            FindByCssSelector("div[id='currentFiat'] span[class='value-option py-1 tex']").Click();
+            Thread.Sleep(1000);
+            FindElementByxPath("//span[normalize-space()='VND']").Click();
+            Thread.Sleep(10000);
+        }
+
+        [TestMethod]
+        [TestCategory("UI")]
+        public void UI_Icon_User_Case1_MyProfile()
+        {
+            var url = "http://127.0.0.1:8000";
+            var email = "nguyenvanquang2k1.00@gmail.com";
+            var password = "123456Aa@";
+            TestUIOnClikc(url, email, password);
+            FindElementByxPath("//div[@class='css-11y6cix']//div[2]//span[1]//img[1]").Click();
+            Thread.Sleep(1000);
+            FindElementByxPath("//label[normalize-space()='My Profile']").Click();
+            Thread.Sleep(1000);
+            SignUpAssert(url + "/user/profile", driver.Url);
+
+           string name_email = FindByClassName("update-username-email").Text;
+
+            SignUpAssert(email, name_email);
             driver.Quit();
+        }
+
+        [TestMethod]
+        [TestCategory("UI")]
+        public void UI_Icon_User_Case2_Payment_Method()
+        {
+            var url = "http://127.0.0.1:8000";
+            var email = "nguyenvanquang2k1.00@gmail.com";
+            var password = "123456Aa@";
+            TestUIOnClikc(url, email, password);
+            FindElementByxPath("//div[@class='css-11y6cix']//div[2]//span[1]//img[1]").Click();
+            Thread.Sleep(1000);
+            FindElementByxPath("//label[normalize-space()='Payment Methods']").Click();
+            Thread.Sleep(1000);
+            SignUpAssert(url + "/payment", driver.Url);
+            driver.Quit();
+        }
+
+        [TestMethod]
+        [TestCategory("UI")]
+        public void UI_Icon_User_Case3_Security()
+        {
+            var url = "http://127.0.0.1:8000";
+            var email = "nguyenvanquang2k1.00@gmail.com";
+            var password = "123456Aa@";
+            TestUIOnClikc(url, email, password);
+            FindElementByxPath("//div[@class='css-11y6cix']//div[2]//span[1]//img[1]").Click();
+            Thread.Sleep(1000);
+            FindElementByxPath("(//label[@class='text-dark fw-600'][normalize-space()='Security'])[1]").Click();
+            Thread.Sleep(1000);
+            SignUpAssert(url + "/user/security", driver.Url);
+            Thread.Sleep(5000);
+            driver.Quit();
+        }
+
+        [TestMethod]
+        [TestCategory("UI")]
+        public void UI_Icon_User_Case4_Personal_Verification()
+        {
+            var url = "http://127.0.0.1:8000";
+            var email = "nguyenvanquang2k1.00@gmail.com";
+            var password = "123456Aa@";
+            TestUIOnClikc(url, email, password);
+            FindElementByxPath("//div[@class='css-11y6cix']//div[2]//span[1]//img[1]").Click();
+            Thread.Sleep(1000);
+            FindElementByxPath("(//label[@class='text-dark fw-600'][normalize-space()='Personal Verification'])[1]").Click();
+            Thread.Sleep(1000);
+            SignUpAssert(url + "/user/kyc", driver.Url);
+            driver.Quit();
+        }
+
+        [TestMethod]
+        [TestCategory("UI")]
+        public void UI_Icon_User_Case5_Settings()
+        {
+            var url = "http://127.0.0.1:8000";
+            var email = "nguyenvanquang2k1.00@gmail.com";
+            var password = "123456Aa@";
+            TestUIOnClikc(url, email, password);
+            FindElementByxPath("//div[@class='css-11y6cix']//div[2]//span[1]//img[1]").Click();
+            Thread.Sleep(1000);
+            FindElementByxPath("(//label[@class='text-dark fw-600'][normalize-space()='Settings'])[1]").Click();
+            Thread.Sleep(1000);
+            SignUpAssert(url + "/user/setting", driver.Url);
+            driver.Quit();
+        }
+
+        public void TestUIOnClikc(string url, string email, string password)
+        {
+            OpenBrowser(url);
+            Login(email, password);
         }
 
 
         [TestMethod]
+        [TestCategory("UI")]
         public void Click_LinkHrefFooter()
         {
             OpenBrowser();
