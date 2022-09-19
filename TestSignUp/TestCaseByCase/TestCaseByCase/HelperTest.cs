@@ -21,8 +21,12 @@ namespace TestCaseByCase
 
         public IWebDriver driver = null;
         public ChromeOptions chromeOptions;
+        //Environment project
+        //local dev
         public string urlLocal = "http://127.0.0.1:8000/";
+        // Production 
         public string urlProduction = "https://payme.thangovn.com/";
+        // Dev
         public string urlDev = "http://payme-dev.thangovn.com/";
 
 
