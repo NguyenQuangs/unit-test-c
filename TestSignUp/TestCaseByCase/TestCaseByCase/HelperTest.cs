@@ -21,11 +21,9 @@ namespace TestCaseByCase
 
         public IWebDriver driver = null;
         public ChromeOptions chromeOptions;
-        public string urlLocal = "http://127.0.0.1:8000";
+        public string urlLocal = "http://127.0.0.1:8000/";
         public string urlProduction = "https://payme.thangovn.com/";
         public string urlDev = "http://payme-dev.thangovn.com/";
-        public string expectedUrl = "http://127.0.0.1:8000/user";
-
 
 
         public WebBrowser()
@@ -56,14 +54,13 @@ namespace TestCaseByCase
 
         public void Login(string email, string password)
         {
-            OpenBrowser();
             FindElementByxPath("//*[@id=\"navbarButtonsExample\"]/div/ul/li[1]/a").Click();
             FindByName("email").SendKeys(email);
             FindByName("password").SendKeys(password);
             FindElementByxPath("//*[@id=\"keepsign\"]").Click();
             FindElementByxPath("//*[@id=\"signin\"]/div[3]/div[2]/button").Click();
             string actualUrl = driver.Url;
-            Assert.AreEqual(expectedUrl, actualUrl, "Login Success");
+            Assert.AreEqual(urlProduction + "user", actualUrl, "Login Success");
         }
 
         public Task<IWebElement> TakesALongTimeToProcess(
@@ -293,11 +290,11 @@ namespace TestCaseByCase
 
         public void SignUpAssert(string expected, string actual)
         {
-            Assert.AreEqual(actual, expected);
+            Assert.AreEqual(expected, actual);
         }
         public void SignUpAsserMessage(string expectedMsg, string actualMsg)
         {
-            Assert.AreEqual(actualMsg, expectedMsg);
+            Assert.AreEqual(expectedMsg, actualMsg);
         }
     }
 }

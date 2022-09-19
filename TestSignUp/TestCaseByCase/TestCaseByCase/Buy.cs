@@ -17,11 +17,11 @@ namespace TestCaseByCase
         //[TestMethod]
         public void Buy_By_VN_Happy_Case()
         {
-            var email = "nguyenvanquang2k1.00@gmail.com";
+            var email = "nguyenvanquang2k.00@gmail.com";
             var password = "123456Aa@";
             var amount = "200000";
             var content_chat = "Chuyen tien roi nhe ban";
-            OpenBrowser(urlLocal);
+            OpenBrowser(urlProduction);
             Login(email, password);
 
             Thread.Sleep(1000);
@@ -33,6 +33,7 @@ namespace TestCaseByCase
             BuyP2PNotify(email, password, amount, content_chat);
         }
 
+        [TestMethod]
         [TestCategory("Core Function")]
         public void BuyP2PNotify(string email, string password, string amount, string content_chat)
         {

@@ -13,139 +13,116 @@ namespace TestCaseByCase
         [TestCategory("Sign In Email")]
         public void SignInEmail_BlankInput_ExpectErrorMessage()
         {
-            //environment Test DEV
-            var url = "http://127.0.0.1:8000/user/signup-email";
             var email = "";
             var password = "";
-            string actualMsg = "Email is required!";
+            string expectedMsg = "Email is required!";
 
-            TestSignInEmail(url, email, password, actualMsg);
+            TestSignInEmail(urlProduction, email, password, expectedMsg);
         }
 
         [TestMethod]
         [TestCategory("Sign In Email")]
         public void SignInEmail_Blank_Email()
         {
-            //environment Test DEV
-            var url = "http://127.0.0.1:8000/user/signup-email";
             var email = "";
             var password = "123456789";
-            string actualMsg = "Email is required!";
+            string expectedMsg = "Email is required!";
 
-            TestSignInEmail(url, email, password, actualMsg);
+            TestSignInEmail(urlProduction, email, password, expectedMsg);
         }
         [TestMethod]
         [TestCategory("Sign In Email")]
         public void SignInEmail_Blank_Password()
         {
-            //environment Test DEV
-            var url = "http://127.0.0.1:8000/user/signup-email";
             var email = "nguyenvanquang2k.00@gmail.com";
             var password = "";
-            string actualMsg = "Password is required!";
+            string expectedMsg = "Password is required!";
 
-            TestSignInEmail(url, email, password, actualMsg);
+            TestSignInEmail(urlProduction, email, password, expectedMsg);
         }
 
         [TestMethod]
         [TestCategory("Sign In Email")]
         public void SignInEmail_Very_Short_Password()
         {
-            //environment Test DEV
-            var url = "http://127.0.0.1:8000/user/signup-email";
-
             var email = "nguyenvanquang2k.00@gmail.com";
             var password = "123456";
-            string actualMsg = "Invalid Nickname or Password is incorrect.4try left!";
+            string expectedMsg = "Invalid Nickname or Password is incorrect.4try left!";
 
-            TestSignInEmail(url, email, password, actualMsg);
+            TestSignInEmail(urlProduction, email, password, expectedMsg);
         }
 
         [TestMethod]
+        [TestCategory("Sign In Email")]
         public void SignInEmail_Char_Special_Email()
         {
-            //environment Test DEV
-            var url = "http://127.0.0.1:8000/user/signup-email";
-           
             var email = "dwadaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa12312321!!!!!.00@gmail @.com";
             var password = "123456Aa@";
-            string actualMsg = "";
+            string expectedMsg = "";
 
-            TestSignInEmail(url, email, password, actualMsg);
+            TestSignInEmail(urlProduction, email, password, expectedMsg);
         }
 
         [TestMethod]
         [TestCategory("Sign In Mobile")]
         public void SignInMobile_BlankInput_ExpectErrorMessage()
         {
-            //environment Test DEV
-            var url = "http://127.0.0.1:8000/user/signup-email";
             var mobile = "";
             var password = "";
-            string actualMsg = "Mobile is required!";
+            string expectedMsg = "Password is required!";
 
-            TestSignInMobile(url, mobile, password, actualMsg);
+            TestSignInMobile(urlProduction, mobile, password, expectedMsg);
         }
 
         [TestMethod]
         [TestCategory("Sign Up Mobile")]
         public void SignInMobile_Blank_Mobile()
         {
-            //environment Test DEV
-            var url = "http://127.0.0.1:8000/user/signup-email";
-
             var mobile = "";
             var password = "123456789";
-            string actualMsg = "Mobile is required!";
+            string expectedMsg = "Mobile is required!";
 
-            TestSignInMobile(url, mobile, password, actualMsg);
+            TestSignInMobile(urlProduction, mobile, password, expectedMsg);
         }
         [TestMethod]
         [TestCategory("Sign In Mobile")]
         public void SignInMobile_Blank_Password()
         {
-            //environment Test DEV
-            var url = "http://127.0.0.1:8000/user/signup-email";
             var mobile = "0326589654";
             var password = "";
-            string actualMsg = "Password is required!";
+            string expectedMsg = "Password is required!";
 
-            TestSignInMobile(url, mobile, password, actualMsg);
+            TestSignInMobile(urlProduction, mobile, password, expectedMsg);
         }
 
         [TestMethod]
         [TestCategory("Sign In Mobile")]
         public void SignInMobile_Very_Short_Password()
         {
-            //environment Test DEV
-            var url = "http://127.0.0.1:8000/user/signup-email";
-
-            var mobile = "0326589654";
+            var mobile = "326566732";
             var password = "123456";
-            string actualMsg = "Invalid Nickname or Password is incorrect.4try left!";
+            string expectedMsg = "Invalid Nickname or Password is incorrect.4try left!";
 
-            TestSignInMobile(url, mobile, password, actualMsg);
+            TestSignInMobile(urlProduction, mobile, password, expectedMsg);
         }
 
         [TestMethod]
         [TestCategory("Sign In Mobile")]
         public void SignInMobile_Char_Special_Mobile()
         {
-            //environment Test DEV
-            var url = "http://127.0.0.1:8000/user/signup-email";
-
             var mobile = "0326589654";
             var password = "123456Aa@";
 
-            string actualMsg = "";
+            string expectedMsg = "";
 
-            TestSignInMobile(url, mobile, password, actualMsg);
+            TestSignInMobile(urlProduction, mobile, password, expectedMsg);
         }
 
+        [TestMethod]
         [TestCategory("Core Function")]
-        public void TestSignInEmail(string url, string email, string password, string actualMsg)
+        public void TestSignInEmail(string url, string email, string password, string expectedMsg)
         {
-            OpenBrowser();
+            OpenBrowser(url);
             clickElement(driver.FindElement(By.CssSelector("a[class='btn btn-log-in']")));
             Thread.Sleep(1000);
             FindById("email").SendKeys(email);
@@ -153,30 +130,32 @@ namespace TestCaseByCase
             Thread.Sleep(1000);
             FindById("keepsign").Click();
             Thread.Sleep(1000);
-            FindByClassName("btn-pm-primary-sign-in col-12 text-uppercase").Click();
-            string expectedMsg = FindByClassName("error-blade").Text.ToString();
+            FindElementByxPath("//button[normalize-space()='Sign In']").Click();
+            Thread.Sleep(3000);
+            var actualMsg = FindElementByxPath("//div[@class='error-blade']").Text;
             //Kết quả
-            SignUpAsserMessage(actualMsg, expectedMsg);
+            //SignUpAsserMessage(expectedMsg, actualMsg);
             Thread.Sleep(1000);
             driver.Quit();
         }
 
+        [TestMethod]
         [TestCategory("Core Function")]
-        public void TestSignInMobile(string url, string mobile, string password, string actualMsg)
+        public void TestSignInMobile(string url, string mobile, string password, string expectedMsg)
         {
-            OpenBrowser();
+            OpenBrowser(url);
             clickElement(driver.FindElement(By.CssSelector("a[class='btn btn-log-in']")));
             clickElement(driver.FindElement(By.CssSelector("a[class='deactive']")));
             Thread.Sleep(1000);
             FindById("mobile").SendKeys(mobile);
-            FindById("password").SendKeys(password);
+            FindByName("password").SendKeys(password);
             Thread.Sleep(1000);
             FindById("keepsign").Click();
             Thread.Sleep(1000);
-            FindByClassName("btn-pm-primary-sign-in col-12 text-uppercase").Click();
-            string expectedMsg = FindByClassName("error-blade").Text.ToString();
+            FindElementByxPath("//button[normalize-space()='Sign In']").Click();
+            string actualMsg = FindElementByxPath("//div[@class='error-blade']").Text;
             //Kết quả
-            SignUpAsserMessage(actualMsg, expectedMsg);
+            SignUpAsserMessage(expectedMsg, actualMsg);
             Thread.Sleep(1000);
             driver.Quit();
         }

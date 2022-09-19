@@ -14,6 +14,7 @@ namespace TestCaseByCase
     public class WalletWithdraw : WebBrowser
     {
         [TestMethod]
+        [TestCategory("Withdraw")]
         public void Withdraw_Happy_Case()
         {
             var email = "nguyenvanquang2k1.00@gmail.com";
@@ -26,10 +27,11 @@ namespace TestCaseByCase
             TestWithdrawWallet(email, password, search, address, amount, actualMsg);
         }
 
+        [TestMethod]
         [TestCategory("Core Function")]
         public void TestWithdrawWallet(string email, string password, string search, string address, string amount, string actualMsg)
         {
-            OpenBrowser(urlLocal);
+            OpenBrowser(urlProduction);
             Login(email, password);
             FindById("search-coin-funding").SendKeys(search);
             Thread.Sleep(2000);
@@ -55,6 +57,7 @@ namespace TestCaseByCase
             driver.Quit();
         }
 
+        [TestMethod]
         [TestCategory("Core Function")]
         public void TestWithdrawConfirmOrder(string code, string authGGCode, string actualMsg)
         {

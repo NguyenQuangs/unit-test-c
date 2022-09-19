@@ -19,17 +19,18 @@ namespace TestCaseByCase
         [TestCategory("Deposit")]
         public void Deposit_Happy_Case()
         {
-            var email = "nguyenvanquang2k1.00@gmail.com";
+            var email = "nguyenvanquang2k.00@gmail.com";
             var password = "123456Aa@";
             var search = "ETH";
             var actualMsg = "Ethereum (ERC20)";
-            TestDepositWallet(email, password, search, actualMsg);
+            TestDepositWallet(urlProduction, email, password, search, actualMsg);
         }
 
+        [TestMethod]
         [TestCategory("Core Function")]
-        public void TestDepositWallet(string email, string password, string search, string actualMsg)
+        public void TestDepositWallet(string url,string email, string password, string search, string actualMsg)
         {
-            OpenBrowser(urlLocal);
+            OpenBrowser(url);
             Login(email, password);
             //Declare variable
             By dropdown = By.XPath("/html/body/header/div[2]/div[3]/div[2]/span");

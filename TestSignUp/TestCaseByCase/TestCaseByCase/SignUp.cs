@@ -17,7 +17,7 @@ namespace TestCaseByCase
             var code = "";
             string actualMsg = "Your email is incorrect, please try again!";
 
-            TestSignUpEmail(urlLocal, email, password, code, actualMsg);
+            TestSignUpEmail(urlProduction, email, password, code, actualMsg);
         }
 
         [TestMethod]
@@ -29,7 +29,7 @@ namespace TestCaseByCase
             var code = "";
             string actualMsg = "Your email is incorrect, please try again!";
 
-            TestSignUpEmail(urlLocal, email, password, code, actualMsg);
+            TestSignUpEmail(urlProduction, email, password, code, actualMsg);
         }
         [TestMethod]
         [TestCategory("Sign Up Email")]
@@ -40,7 +40,7 @@ namespace TestCaseByCase
             var code = "";
             string actualMsg = "Your password is incorrect, please try again!";
 
-            TestSignUpEmail(urlLocal, email, password, code, actualMsg);
+            TestSignUpEmail(urlProduction, email, password, code, actualMsg);
         }
 
         [TestMethod]
@@ -52,10 +52,11 @@ namespace TestCaseByCase
             var code = "";
             string actualMsg = "The passwords must be at least 8 characters!";
 
-            TestSignUpEmail(urlLocal, email, password, code, actualMsg);
+            TestSignUpEmail(urlProduction, email, password, code, actualMsg);
         }
 
         [TestMethod]
+        [TestCategory("Sign Up Email")]
         public void SignUpEmail_Char_Special_Email()
         {
             var email = "dwadaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa12312321!!!!!.00@gmail @.com";
@@ -63,7 +64,7 @@ namespace TestCaseByCase
             var code = "";
             string actualMsg = "";
 
-            TestSignUpEmail(urlLocal, email, password, code, actualMsg);
+            TestSignUpEmail(urlProduction, email, password, code, actualMsg);
         }
 
         [TestMethod]
@@ -75,7 +76,7 @@ namespace TestCaseByCase
             var code = "";
             string actualMsg = "Your mobile is incorrect, please try again!";
 
-            TestSignUpEmail(urlLocal, mobile, password, code, actualMsg);
+            TestSignUpEmail(urlProduction, mobile, password, code, actualMsg);
         }
 
         [TestMethod]
@@ -87,7 +88,7 @@ namespace TestCaseByCase
             var code = "";
             string actualMsg = "Your mobile is incorrect, please try again!";
 
-            TestSignUpEmail(urlLocal, mobile, password, code, actualMsg);
+            TestSignUpEmail(urlProduction, mobile, password, code, actualMsg);
         }
         [TestMethod]
         [TestCategory("Sign Up Mobile")]
@@ -98,7 +99,7 @@ namespace TestCaseByCase
             var code = "";
             string actualMsg = "Your password is incorrect, please try again!";
 
-            TestSignUpEmail(urlLocal, mobile, password, code, actualMsg);
+            TestSignUpEmail(urlProduction, mobile, password, code, actualMsg);
         }
 
         [TestMethod]
@@ -111,7 +112,7 @@ namespace TestCaseByCase
             var code = "";
             string actualMsg = "The passwords must be at least 8 characters!";
 
-            TestSignUpEmail(urlLocal, mobile, password, code, actualMsg);
+            TestSignUpEmail(urlProduction, mobile, password, code, actualMsg);
         }
 
         [TestMethod]
@@ -123,7 +124,7 @@ namespace TestCaseByCase
             var code = "";
             string actualMsg = "";
 
-            TestSignUpEmail(urlLocal, mobile, password, code, actualMsg);
+            TestSignUpEmail(urlProduction, mobile, password, code, actualMsg);
         }
 
         [TestCategory("Core Function")]

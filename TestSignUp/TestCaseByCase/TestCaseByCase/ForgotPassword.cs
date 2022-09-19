@@ -18,15 +18,13 @@ namespace TestCaseByCase
         //password: Password is required
         //least password:  The passwords must be at least 8 characters!
         //not match:  The confirm password and password must match.
-        [TestMethod]
-        public void TestMethod1()
-        {
-        }
+       
         //Forgot email
+        [TestMethod]
         [TestCategory("Core Function")]
         public void TestForgotPasswordEmail(string email, string actualMsg)
         {
-            OpenBrowser(urlLocal);
+            OpenBrowser(urlProduction);
             clickElement(driver.FindElement(By.CssSelector("a[href='/user/reset-password']")));
             Thread.Sleep(1000);
             FindByName("email").SendKeys(email);
@@ -40,6 +38,7 @@ namespace TestCaseByCase
             driver.Quit();
         }
         //Verify code
+        [TestMethod]
         [TestCategory("Core Function")]
         public void TestForgotVerify(string code, string actualMsg)
         {
@@ -53,6 +52,7 @@ namespace TestCaseByCase
             driver.Quit();
         }
         //Chang password
+        [TestMethod]
         [TestCategory("Core Function")]
         public void TestChangePassword(string password, string confirm_password, string actualMsg)
         {
@@ -68,7 +68,7 @@ namespace TestCaseByCase
             driver.Quit();
         }
 
-        
+        [TestMethod]
         [TestCategory("Core Function")]
         public void loginGoogleAccount()
         {
@@ -99,7 +99,7 @@ namespace TestCaseByCase
 
             Thread.Sleep(3000);
             var passwordElement = webDriver.FindElement(By.XPath("//input[@type='password']"));
-            passwordElement.SendKeys("01864089187");
+            passwordElement.SendKeys("555644");
 
             Thread.Sleep(1000);
             var passwordNext = webDriver.FindElement(By.Id("passwordNext"));
@@ -133,7 +133,7 @@ namespace TestCaseByCase
                 query.Click();
                 driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
                 query = driver.FindElement(By.CssSelector("input[name='password']"));
-                query.SendKeys("01864089187");
+                query.SendKeys("2655255");
                 driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
                 Thread.Sleep(500);
 

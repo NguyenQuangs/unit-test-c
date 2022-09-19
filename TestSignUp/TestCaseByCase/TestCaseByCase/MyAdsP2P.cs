@@ -14,6 +14,7 @@ namespace TestCaseByCase
     public class MyAdsP2P :WebBrowser
     {
         [TestMethod]
+        [TestCategory("MyAds P2P")]
         public void TestMethod1()
         {
         }
@@ -23,6 +24,7 @@ namespace TestCaseByCase
         //min 1.000.000
         //max 5.000.000
         [TestMethod]
+        [TestCategory("MyAds P2P")]
         public void TestCreateP2POrder_Case2()
         {
             //setup test
@@ -45,7 +47,7 @@ namespace TestCaseByCase
             var amount = "50";
             var min = "10000000";
             var max = "50000000";
-            TestMyAdsIWantBuy(urlLocal, email, password, amount, min, max);
+            TestMyAdsIWantBuy(urlProduction, email, password, amount, min, max);
 
 
         }
@@ -60,6 +62,7 @@ namespace TestCaseByCase
         //max 50.000.000
         //3. remark, option
         [TestMethod]
+        [TestCategory("MyAds P2P")]
         public void TestCreateP2POrder_Case3_EmptyInput()
         {
             var email = "nguyenvanquang2k.00@gmail.com";
@@ -67,14 +70,15 @@ namespace TestCaseByCase
             var amount = "0.5";
             var min = "150000";
             var max = "20000000";
-            TestMyAdsIWantBuy(urlLocal, email, password, amount, min, max); 
+            TestMyAdsIWantBuy(urlProduction, email, password, amount, min, max); 
         }
 
+        [TestMethod]
         [TestCategory("Core Function")]
         //Remind đã KYC rồi
-        public void TestMyAdsIWantBuy(string urlLocal, string email, string password, string amount, string min, string max)
+        public void TestMyAdsIWantBuy(string urlProduction, string email, string password, string amount, string min, string max)
         {
-            OpenBrowser(urlLocal);
+            OpenBrowser(urlProduction);
             Login(email, password);
             var textMyAds = FindElementByxPath("/html/body/header/div[1]/a[3]/div");
             textMyAds.Click();
@@ -108,11 +112,12 @@ namespace TestCaseByCase
             driver.Quit();
         }
 
+        [TestMethod]
         [TestCategory("Core Function")]
         //Remind đã KYC rồi
         public void TestMyAdsIWantSell(string email, string password, string amount, string min, string max)
         {
-            OpenBrowser(urlLocal);
+            OpenBrowser(urlProduction);
             Login(email, password);
             var textMyAds = FindElementByxPath("/html/body/header/div[1]/a[3]/div");
             textMyAds.Click();
@@ -146,11 +151,12 @@ namespace TestCaseByCase
             driver.Quit();
         }
 
+        [TestMethod]
         [TestCategory("Core Function")]
         //Remind chưa KYC rồi
         public void TestMyAdsKYCIWantSell(string email, string password, string amount, string min, string max)
         {
-            OpenBrowser(urlLocal);
+            OpenBrowser(urlProduction);
             Login(email, password);
             var textMyAds = FindElementByxPath("/html/body/header/div[1]/a[3]/div");
             textMyAds.Click();
@@ -163,7 +169,7 @@ namespace TestCaseByCase
                 btnKYC.Click();
                 Thread.Sleep(2000);
                 string actual_case1 = driver.Url;
-                Assert.AreEqual(urlLocal + "/user/kyc", actual_case1, "Failed verify KYC");
+                Assert.AreEqual(urlProduction + "/user/kyc", actual_case1, "Failed verify KYC");
             FindById("ETH").Click();
             FindById("VND").Click();
             var btnNext = FindById("btnNext");
