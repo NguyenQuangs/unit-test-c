@@ -14,7 +14,8 @@ namespace TestCaseByCase
     [TestClass]
     public class Buy : WebBrowser
     {
-        //[TestMethod]
+        [TestMethod]
+        [TestCategory("Buy")]
         public void Buy_By_VN_Happy_Case()
         {
             var email = "nguyenvanquang2k.00@gmail.com";
@@ -30,12 +31,12 @@ namespace TestCaseByCase
             Thread.Sleep(1000);
             FindElementByxPath("//div[@id='drop-list-fiat']//li[@value='1']").Click();
 
-            BuyP2PNotify(email, password, amount, content_chat);
+            TestBuyP2PNotify(email, password, amount, content_chat);
         }
 
         [TestMethod]
-        [TestCategory("Core Function")]
-        public void BuyP2PNotify(string email, string password, string amount, string content_chat)
+        [TestCategory("Core-Function")]
+        public void TestBuyP2PNotify(string email, string password, string amount, string content_chat)
         {
             Thread.SpinWait(3000);
             FindByCssSelector(".ms-2.bg-gradient-yellow-order.white-space-nowrap").Click();
