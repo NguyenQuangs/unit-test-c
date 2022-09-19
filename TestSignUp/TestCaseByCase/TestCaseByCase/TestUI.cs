@@ -95,7 +95,7 @@ namespace TestCaseByCase
         {
             var email = "nguyenvanquang2k.00@gmail.com";
             var password = "123456Aa@";
-            TestUIOnClikc(urlProduction, email, password);
+            TestUIClick(urlProduction, email, password);
             FindElementByxPath("//div[normalize-space()='Buy']").Click();
             Thread.Sleep(1000);
             FindById("dropdownFiat").Click();
@@ -111,7 +111,7 @@ namespace TestCaseByCase
         {
             var email = "nguyenvanquang2k.00@gmail.com";
             var password = "123456Aa@";
-            TestUIOnClikc(urlProduction, email, password);
+            TestUIClick(urlProduction, email, password);
             FindByCssSelector("//div[normalize-space()='Sell']").Click();
             Thread.Sleep(1000);
             FindByCssSelector("div[id='currentFiat'] span[class='value-option py-1 tex']").Click();
@@ -126,7 +126,7 @@ namespace TestCaseByCase
         {
             var email = "nguyenvanquang2k.00@gmail.com";
             var password = "123456Aa@";
-            TestUIOnClikc(urlProduction, email, password);
+            TestUIClick(urlProduction, email, password);
             FindElementByxPath("//div[@class='css-11y6cix']//div[2]//span[1]//img[1]").Click();
             Thread.Sleep(1000);
             FindElementByxPath("//label[normalize-space()='My Profile']").Click();
@@ -145,7 +145,7 @@ namespace TestCaseByCase
         {
             var email = "nguyenvanquang2k.00@gmail.com";
             var password = "123456Aa@";
-            TestUIOnClikc(urlProduction, email, password);
+            TestUIClick(urlProduction, email, password);
             FindElementByxPath("//div[@class='css-11y6cix']//div[2]//span[1]//img[1]").Click();
             Thread.Sleep(1000);
             FindElementByxPath("//label[normalize-space()='Payment Methods']").Click();
@@ -160,7 +160,7 @@ namespace TestCaseByCase
         {
             var email = "nguyenvanquang2k.00@gmail.com";
             var password = "123456Aa@";
-            TestUIOnClikc(urlProduction, email, password);
+            TestUIClick(urlProduction, email, password);
             FindElementByxPath("//div[@class='css-11y6cix']//div[2]//span[1]//img[1]").Click();
             Thread.Sleep(1000);
             FindElementByxPath("(//label[@class='text-dark fw-600'][normalize-space()='Security'])[1]").Click();
@@ -176,7 +176,7 @@ namespace TestCaseByCase
         {
             var email = "nguyenvanquang2k.00@gmail.com";
             var password = "123456Aa@";
-            TestUIOnClikc(urlProduction, email, password);
+            TestUIClick(urlProduction, email, password);
             FindElementByxPath("//div[@class='css-11y6cix']//div[2]//span[1]//img[1]").Click();
             Thread.Sleep(1000);
             FindElementByxPath("(//label[@class='text-dark fw-600'][normalize-space()='Personal Verification'])[1]").Click();
@@ -191,7 +191,7 @@ namespace TestCaseByCase
         {
             var email = "nguyenvanquang2k.00@gmail.com";
             var password = "123456Aa@";
-            TestUIOnClikc(urlProduction, email, password);
+            TestUIClick(urlProduction, email, password);
             FindElementByxPath("//div[@class='css-11y6cix']//div[2]//span[1]//img[1]").Click();
             Thread.Sleep(1000);
             FindElementByxPath("(//label[@class='text-dark fw-600'][normalize-space()='Settings'])[1]").Click();
@@ -202,7 +202,7 @@ namespace TestCaseByCase
 
         [TestMethod]
         [TestCategory("Core Function")]
-        public void TestUIOnClikc(string url, string email, string password)
+        public void TestUIClick(string url, string email, string password)
         {
             OpenBrowser(url);
             Login(email, password);
