@@ -131,7 +131,7 @@ namespace TestCaseByCase
             Thread.Sleep(1000);
             FindElementByxPath("//label[normalize-space()='My Profile']").Click();
             Thread.Sleep(1000);
-            SignUpAssert(urlProduction + "/user/profile", driver.Url);
+            SignUpAssert(urlProduction + "user/profile", driver.Url);
 
            string name_email = FindByClassName("update-username-email").Text;
 
@@ -150,7 +150,7 @@ namespace TestCaseByCase
             Thread.Sleep(1000);
             FindElementByxPath("//label[normalize-space()='Payment Methods']").Click();
             Thread.Sleep(1000);
-            SignUpAssert(urlProduction + "/payment", driver.Url);
+            SignUpAssert(urlProduction + "payment", driver.Url);
             driver.Quit();
         }
 
@@ -165,7 +165,7 @@ namespace TestCaseByCase
             Thread.Sleep(1000);
             FindElementByxPath("(//label[@class='text-dark fw-600'][normalize-space()='Security'])[1]").Click();
             Thread.Sleep(1000);
-            SignUpAssert(urlProduction + "/user/security", driver.Url);
+            SignUpAssert(urlProduction + "user/security", driver.Url);
             Thread.Sleep(5000);
             driver.Quit();
         }
@@ -181,7 +181,7 @@ namespace TestCaseByCase
             Thread.Sleep(1000);
             FindElementByxPath("(//label[@class='text-dark fw-600'][normalize-space()='Personal Verification'])[1]").Click();
             Thread.Sleep(1000);
-            SignUpAssert(urlProduction + "/user/kyc", driver.Url);
+            SignUpAssert(urlProduction + "user/kyc", driver.Url);
             driver.Quit();
         }
 
@@ -196,7 +196,7 @@ namespace TestCaseByCase
             Thread.Sleep(1000);
             FindElementByxPath("(//label[@class='text-dark fw-600'][normalize-space()='Settings'])[1]").Click();
             Thread.Sleep(1000);
-            SignUpAssert(urlProduction + "/user/setting", driver.Url);
+            SignUpAssert(urlProduction + "user/setting", driver.Url);
             driver.Quit();
         }
 
@@ -234,7 +234,12 @@ namespace TestCaseByCase
             FindElementByxPath("//a[normalize-space()='Payme P2P Trading Guidelines']").Click();
             action(Keys.PageDown);
             string actualFAQ2 = driver.Title;
-
+            Thread.Sleep(5000);
+            action(Keys.PageDown);
+            Thread.Sleep(5000);
+            action(Keys.PageDown);
+            Thread.Sleep(5000);
+            action(Keys.PageDown);
             Thread.Sleep(10000);
             SignUpAssert(actualFAQ2, expectedF);
             Thread.Sleep(10000);
@@ -243,6 +248,10 @@ namespace TestCaseByCase
             mouseAction(FindElementByxPath("//h3[normalize-space()='FAQS']"));
             action(Keys.PageDown);
             Thread.Sleep(10000);
+            Thread.Sleep(5000);
+            action(Keys.PageDown);
+            Thread.Sleep(5000);
+            action(Keys.PageDown);
             Thread.Sleep(1000);
             FindElementByxPath("//a[normalize-space()='Payme trading FAQ']").Click();
             action(Keys.PageDown);
